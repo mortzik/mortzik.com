@@ -9,14 +9,11 @@ media:
 content:
   - name: releases
     label: Releases
-    description: Newest first — the order here is the order on the site. The first release (or the one marked "Show as latest") appears in the top section.
+    description: Newest first — drag the handle to reorder, bin icon to remove. The first release (or the one marked "Show as latest") appears in the top section.
     type: file
     path: _data/releases.yml
     format: yaml
-    list:
-      collapsible:
-        collapsed: true
-        summary: "{year} · {title}"
+    list: true
     fields:
       - { name: title, label: Title, type: string, required: true }
       - { name: year, label: Year, type: string }
@@ -32,14 +29,11 @@ content:
 
   - name: works
     label: Works (audio-visual & sound design)
-    description: Project cards. Drag to reorder; the first one appears first.
+    description: Project cards in display order — drag the handle to reorder, bin icon to remove.
     type: file
     path: _data/works.yml
     format: yaml
-    list:
-      collapsible:
-        collapsed: true
-        summary: "{year} · {title}"
+    list: true
     fields:
       - { name: title, label: Title, type: string, required: true }
       - { name: year, label: Year, type: string }
@@ -52,14 +46,11 @@ content:
 
   - name: gallery
     label: Gallery
-    description: Photo groups shown in the "On site" section.
+    description: Photo groups shown in the "On site" section — drag to reorder, bin icon to remove.
     type: file
     path: _data/gallery.yml
     format: yaml
-    list:
-      collapsible:
-        collapsed: true
-        summary: "{title}"
+    list: true
     fields:
       - { name: title, label: Group title, type: string, required: true, description: "e.g. Luminary · Bright Festival · Leipzig · 2021" }
       - name: photos
