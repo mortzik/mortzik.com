@@ -25,15 +25,6 @@
   <meta property="og:image" content="https://mortzik.com/assets/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#07070a">
-  <!-- Pick day/night before first paint: saved choice, else the device setting -->
-  <script>
-    (function () {
-      var t; try { t = localStorage.getItem("theme"); } catch (e) {}
-      if (t !== "day" && t !== "night") t = window.matchMedia("(prefers-color-scheme: light)").matches ? "day" : "night";
-      document.documentElement.setAttribute("data-theme", t);
-      if (t === "day") document.querySelector('meta[name="theme-color"]').setAttribute("content", "#F2F0EA");
-    })();
-  </script>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/assets/icon-512.png" type="image/png" sizes="512x512">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -50,7 +41,6 @@
       <span class="badge"><svg aria-hidden="true"><use href="#mark"/></svg></span>
       <span class="mono wordmark">MORTZIK</span>
     </a>
-    <div class="nav-right">
     <nav>
       <a href="#about">About</a>
       <a href="#listen">Music</a>
@@ -59,8 +49,6 @@
       <a href="#gallery">Gallery</a>
       <a href="#contact">Contact</a>
     </nav>
-    <button type="button" class="theme-toggle" aria-label="Switch to day theme"><span class="dot" aria-hidden="true"></span><span class="tt-label">Day</span></button>
-    </div>
   </header>
 
   <!-- MRT/ZK grid monogram (from assets/logo-mark.svg), defined once and reused -->

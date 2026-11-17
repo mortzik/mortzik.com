@@ -43,16 +43,7 @@
   const cv = hero.querySelector(".hero-canvas");
   const ctx = cv.getContext("2d");
   let W = 0, H = 0, dpr = 1, raf = 0, st = {}, mode = "photos", visible = true;
-  // colours come from CSS variables so the canvas follows the day/night theme
-  let BG, BGRGB, PAPER, ACCENT;
-  function readColors() {
-    const cs = getComputedStyle(document.documentElement);
-    BGRGB = cs.getPropertyValue("--cv-bg").trim() || "7, 7, 10";
-    PAPER = cs.getPropertyValue("--cv-ink").trim() || "242, 240, 234";
-    ACCENT = cs.getPropertyValue("--cv-accent").trim() || "230, 255, 58";
-    BG = `rgb(${BGRGB})`;
-  }
-  readColors();
+  const BG = "#07070a", PAPER = "242,240,234", ACCENT = "230,255,58";
 
   function size() {
     const r = hero.getBoundingClientRect();
@@ -130,7 +121,7 @@
   };
   draw.ink = t => {
     const s = t / 1000;
-    ctx.fillStyle = `rgba(${BGRGB},0.06)`; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = "rgba(7,7,10,0.06)"; ctx.fillRect(0, 0, W, H);
     ctx.lineWidth = 1;
     for (const q of st.p) {
       const ang = Math.sin(q.x * 0.0032 + s * 0.15) * 2.2 + Math.cos(q.y * 0.0041 - s * 0.11) * 2.2 + Math.sin((q.x + q.y) * 0.0013 + s * 0.05);
@@ -157,23 +148,12 @@
 
   /* ---------- switching ---------- */
   const buttons = [...hero.querySelectorAll(".motion-switch button")];
-  // in day theme, the menu bar turns light-on-dark while over the photo hero
-  const nav = document.querySelector(".nav");
-  function updateNav() {
-    if (!nav) return;
-    const day = document.documentElement.getAttribute("data-theme") === "day";
-    nav.classList.toggle("on-dark", day && mode === "photos" && window.scrollY < hero.offsetHeight - nav.offsetHeight);
-  }
-  window.addEventListener("scroll", updateNav, { passive: true });
-  document.addEventListener("themechange", updateNav);
-
   function setMode(m) {
     mode = m;
     hero.dataset.active = m;
     buttons.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.mode === m)));
     if (m === "photos") { startSlides(); } else { clearInterval(slideTimer); }
     run();
-    updateNav();
   }
   function randomMode(exclude) {
     const pool = MODES.filter(m => m !== exclude);
@@ -195,7 +175,6 @@
   let rt = 0;
   window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { if (mode !== "photos") size(); }, 150); });
 
-  document.addEventListener("themechange", () => { readColors(); if (mode !== "photos") { size(); if (reduced) run(); } });
   window.addEventListener("load", loadAllSlides);
   const pref = hero.dataset.motion;
   setMode(MODES.includes(pref) ? pref : randomMode());
@@ -283,27 +262,4 @@
       node.replaceWith(frag);
     });
   });
-})();
-
-// Day / night switch (remembered per visitor)
-(() => {
-  const root = document.documentElement;
-  const btn = document.querySelector(".theme-toggle");
-  const meta = document.querySelector('meta[name="theme-color"]');
-  if (!btn) return;
-  const label = btn.querySelector(".tt-label");
-  const sync = () => {
-    const day = root.getAttribute("data-theme") === "day";
-    label.textContent = day ? "Night" : "Day";
-    btn.setAttribute("aria-label", day ? "Switch to night theme" : "Switch to day theme");
-    if (meta) meta.setAttribute("content", day ? "#F2F0EA" : "#07070a");
-  };
-  btn.addEventListener("click", () => {
-    const next = root.getAttribute("data-theme") === "day" ? "night" : "day";
-    root.setAttribute("data-theme", next);
-    try { localStorage.setItem("theme", next); } catch (e) {}
-    sync();
-    document.dispatchEvent(new Event("themechange"));
-  });
-  sync();
 })();
