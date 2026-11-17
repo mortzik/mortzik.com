@@ -41,7 +41,8 @@
       <span class="badge"><svg aria-hidden="true"><use href="#mark"/></svg></span>
       <span class="mono wordmark">MORTZIK</span>
     </a>
-    <nav>
+    <button type="button" class="menu-toggle mono" aria-expanded="false" aria-controls="site-menu"><span class="mt-open">Menu</span><span class="mt-close">Close</span></button>
+    <nav id="site-menu">
       <a href="#about">About</a>
       <a href="#listen">Music</a>
       {%- if has_video %}<a href="#video">Video</a>{% endif %}

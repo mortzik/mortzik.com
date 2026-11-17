@@ -263,3 +263,19 @@
     });
   });
 })();
+
+// Phone menu
+(() => {
+  const nav = document.querySelector(".nav");
+  const btn = nav && nav.querySelector(".menu-toggle");
+  if (!btn) return;
+  const set = open => {
+    nav.classList.toggle("open", open);
+    document.body.classList.toggle("menu-open", open);
+    btn.setAttribute("aria-expanded", String(open));
+  };
+  btn.addEventListener("click", () => set(!nav.classList.contains("open")));
+  nav.querySelectorAll("nav a").forEach(a => a.addEventListener("click", () => set(false)));
+  document.addEventListener("keydown", e => { if (e.key === "Escape") set(false); });
+  window.addEventListener("resize", () => { if (window.innerWidth > 760) set(false); });
+})();
