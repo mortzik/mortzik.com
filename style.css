@@ -297,14 +297,17 @@ footer {
   font-size: 11px; letter-spacing: .1em; color: var(--fg);
   text-align: right;
 }
-.slide-count { color: var(--accent); }
+.slide-count { color: var(--accent); white-space: nowrap; }
 .slide-cap { opacity: .8; white-space: nowrap; }
 .hero-bottom {
   position: absolute; left: clamp(16px, 4vw, 48px); right: clamp(16px, 4vw, 48px); bottom: 64px;
   display: flex; justify-content: space-between; align-items: flex-end; gap: 32px;
 }
-.kicker { color: var(--accent); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 12px; }
-.intro { max-width: 30ch; font-size: clamp(22px, 2.4vw, 34px); text-shadow: 0 1px 24px rgba(0,0,0,.5); line-height: 1.35; font-weight: 400; }
+.roles {
+  font-size: clamp(20px, 2.6vw, 36px); font-weight: 500;
+  text-transform: uppercase; letter-spacing: .08em; line-height: 1.25;
+  text-shadow: 0 1px 24px rgba(0,0,0,.5);
+}
 .latest {
   display: flex; align-items: center; gap: 16px;
   padding: 12px 18px 12px 12px;
@@ -338,7 +341,7 @@ footer {
   .slide, .slide img, .slide.is-active img, .slide.glitch img { animation: none; transition: none; }
 }
 @media (max-width: 760px) {
-  .kicker { font-size: 10px; letter-spacing: .08em; }
+  .roles { font-size: 18px; letter-spacing: .06em; }
 }
 @media (max-width: 760px) {
   .slide-info { top: 76px; left: 16px; right: 16px; justify-content: space-between; text-align: left; }
