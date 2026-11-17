@@ -279,3 +279,24 @@
   document.addEventListener("keydown", e => { if (e.key === "Escape") set(false); });
   window.addEventListener("resize", () => { if (window.innerWidth > 760) set(false); });
 })();
+
+// Always start at the top after a refresh, and keep section links out of the address bar
+(() => {
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  const nav = performance.getEntriesByType && performance.getEntriesByType("navigation")[0];
+  const isReload = nav ? nav.type === "reload" : (performance.navigation && performance.navigation.type === 1);
+  if (isReload || !location.hash) {
+    if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+    window.scrollTo(0, 0);
+    window.addEventListener("load", () => window.scrollTo(0, 0));
+  }
+  // in-page links scroll smoothly without adding #section to the URL
+  document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener("click", e => {
+    const id = a.getAttribute("href").slice(1);
+    const target = id === "top" ? document.body : document.getElementById(id);
+    if (!target) return;
+    e.preventDefault();
+    if (id === "top") window.scrollTo({ top: 0, behavior: "smooth" });
+    else target.scrollIntoView({ behavior: "smooth" });
+  }));
+})();
