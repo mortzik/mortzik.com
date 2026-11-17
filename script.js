@@ -118,3 +118,18 @@
 
   document.getElementById("year").textContent = new Date().getFullYear();
 })();
+
+// Lightbox for the gallery
+(() => {
+  const lb = document.getElementById("lightbox");
+  if (!lb) return;
+  const img = lb.querySelector("img"), cap = lb.querySelector(".lb-cap");
+  const close = () => { lb.hidden = true; img.src = ""; };
+  document.querySelectorAll(".shot").forEach(a => a.addEventListener("click", e => {
+    e.preventDefault();
+    img.src = a.href; img.alt = a.dataset.caption; cap.textContent = a.dataset.caption;
+    lb.hidden = false;
+  }));
+  lb.addEventListener("click", e => { if (e.target !== img) close(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") close(); });
+})();
