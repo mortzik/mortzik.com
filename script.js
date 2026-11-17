@@ -239,3 +239,42 @@
   lb.addEventListener("click", e => { if (e.target !== img) close(); });
   document.addEventListener("keydown", e => { if (e.key === "Escape") close(); });
 })();
+
+// YouTube player: a playlist link, or a list of single video links
+(() => {
+  const box = document.querySelector(".video");
+  if (!box) return;
+  const frame = box.querySelector("iframe");
+  const base = "https://www.youtube-nocookie.com/embed/";
+  const idFrom = url => {
+    const m = String(url).match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/|\/live\/)([\w-]{11})/);
+    return m ? m[1] : (/^[\w-]{11}$/.test(url) ? url : null);
+  };
+  const listFrom = url => {
+    const m = String(url).match(/[?&]list=([\w-]+)/);
+    return m ? m[1] : (/^(PL|UU|OL|FL|RD)[\w-]+$/.test(url) ? url : null);
+  };
+  const params = "rel=0&modestbranding=1&color=white";
+
+  const pl = listFrom(box.dataset.playlist || "");
+  if (pl) { frame.src = `${base}videoseries?list=${pl}&${params}`; return; }
+
+  const buttons = [...box.querySelectorAll(".video-list button")];
+  const ids = buttons.map(b => idFrom(b.dataset.url));
+  const play = (i, autoplay) => {
+    const id = ids[i];
+    if (!id) return;
+    // queue the remaining videos so the player continues through the list
+    const rest = ids.slice(i + 1).concat(ids.slice(0, i)).filter(Boolean).join(",");
+    frame.src = `${base}${id}?${params}${rest ? `&playlist=${rest}` : ""}${autoplay ? "&autoplay=1" : ""}`;
+    buttons.forEach((b, j) => b.setAttribute("aria-current", String(j === i)));
+  };
+  buttons.forEach((b, i) => b.addEventListener("click", () => play(i, true)));
+  const first = ids.findIndex(Boolean);
+  if (first >= 0) play(first, false);
+  else {
+    // a single video link with no list shown
+    const one = idFrom(box.dataset.playlist || "");
+    if (one) frame.src = `${base}${one}?${params}`;
+  }
+})();

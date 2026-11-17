@@ -90,6 +90,16 @@ content:
       - { name: email, label: Contact email, type: string }
       - { name: spotify_artist_id, label: Spotify artist ID, type: string }
       - { name: soundcloud_url, label: SoundCloud profile URL, type: string }
+      - { name: youtube_playlist, label: YouTube playlist link, type: string, description: "Paste a playlist link (…playlist?list=…). Leave empty to use the video list below instead." }
+      - name: youtube_videos
+        label: YouTube videos (used when no playlist link is set)
+        description: Paste each video's YouTube link. They play in this order.
+        type: object
+        list: true
+        fields:
+          - { name: url, label: YouTube link, type: string }
+          - { name: title, label: Title, type: string }
+          - { name: note, label: Note, type: string, description: "e.g. 2024 · Audio-visual" }
       - name: listen_links
         label: Streaming links (Music section)
         type: object
