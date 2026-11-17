@@ -69,6 +69,13 @@ content:
     fields:
       - { name: roles, label: Role line (top of the site), type: string, description: "e.g. Electronic music · Soundtrack · Audio-visual" }
       - { name: intro, label: Short description (search engines & link previews only), type: text }
+      - name: hero_motion
+        label: Top background
+        description: '"random" picks a different one on every visit.'
+        type: select
+        options:
+          values: [random, photos, grid, karbandi, ink, signal]
+      - { name: show_motion_switcher, label: Show background buttons on the site, type: boolean }
       - name: hero_slides
         label: Hero slides (full-screen photos at the top)
         description: Landscape photos work best. They fade in this order.
