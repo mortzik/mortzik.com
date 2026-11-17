@@ -30,7 +30,6 @@
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <canvas id="field" aria-hidden="true"></canvas>
   <div class="grain" aria-hidden="true"></div>
 
   <header class="nav">
@@ -68,8 +67,13 @@
   <main id="top">
     <!-- HERO: the monogram sits at the centre of the polyrhythm rings -->
     <section class="hero">
-      <div class="hero-core" aria-hidden="true">
-        <span class="badge big"><svg aria-hidden="true"><use href="#mark"/></svg></span>
+      <!-- Full-screen slideshow of installation photos (edit in panel: Bio, links & contact → Hero slides) -->
+      <div class="hero-media" aria-hidden="true">
+        {%- for sl in s.hero_slides %}
+        <figure class="slide{% if forloop.first %} is-active{% endif %}" data-caption="{{ sl.caption | escape }}">
+          <img {% if forloop.first %}src{% else %}data-src{% endif %}="{{ sl.image }}" alt="">
+        </figure>
+        {%- endfor %}
       </div>
       <h1 class="sr-only">Mortzik</h1>
 
@@ -90,6 +94,9 @@
         </a>
         {%- endif %}
       </div>
+      {%- if s.hero_slides.size > 0 %}
+      <p class="slide-info mono" aria-live="polite"><span class="slide-count">01 / {{ s.hero_slides.size | prepend: "0" | slice: -2, 2 }}</span><span class="slide-cap">{{ s.hero_slides[0].caption }}</span></p>
+      {%- endif %}
       <a href="#about" class="scroll mono" aria-label="Scroll down">scroll ↓</a>
     </section>
 

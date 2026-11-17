@@ -25,12 +25,7 @@ body {
 a { color: inherit; }
 .mono { font-family: var(--mono); }
 
-/* Background */
-#field {
-  position: fixed; inset: 0;
-  width: 100%; height: 100%;
-  z-index: -2;
-}
+/* Background grain */
 .grain {
   position: fixed; inset: -50%;
   z-index: -1; pointer-events: none;
@@ -260,30 +255,56 @@ footer {
 .foot-brand { display: inline-flex; align-items: center; gap: 10px; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-/* Hero: monogram at the centre of the rings, details anchored to the bottom */
+/* Hero: full-screen slideshow of installation photos */
 .hero {
   min-height: 100svh;
   position: relative;
-  display: grid; place-items: center;
-  padding: 90px clamp(16px, 4vw, 48px) 40px;
+  overflow: hidden;
+  isolation: isolate;
 }
-.hero-core {
-  display: flex;
-  position: absolute; left: 50%; top: 50%;
-  transform: translate(-50%, -50%);
+.hero-media { position: absolute; inset: 0; z-index: -1; background: var(--bg); }
+.hero-media::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(7,7,10,.75) 0%, rgba(7,7,10,.1) 22%, rgba(7,7,10,.15) 55%, rgba(7,7,10,.92) 100%),
+    linear-gradient(90deg, rgba(7,7,10,.55) 0%, transparent 55%);
 }
-.hero-core .badge { animation: pulse 9s linear infinite; }
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  2% { transform: scale(1.06); }
-  6% { transform: scale(1); }
+.slide {
+  position: absolute; inset: 0; margin: 0;
+  opacity: 0; transition: opacity 1.6s ease;
 }
+.slide.is-active { opacity: 1; }
+.slide img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  filter: saturate(.85) contrast(1.05);
+  transform: scale(1.04);
+}
+.slide.is-active img { animation: drift 9s ease-out forwards; }
+@keyframes drift { from { transform: scale(1.04); } to { transform: scale(1.12); } }
+/* brief scan-line glitch as a new slide arrives */
+.slide.glitch img { animation: drift 9s ease-out forwards, slice .45s steps(1) 1; }
+@keyframes slice {
+  0%   { clip-path: inset(12% 0 70% 0); translate: -14px 0; }
+  20%  { clip-path: inset(55% 0 25% 0); translate: 10px 0; }
+  40%  { clip-path: inset(30% 0 52% 0); translate: -6px 0; }
+  60%  { clip-path: inset(78% 0 8% 0);  translate: 8px 0; }
+  80%  { clip-path: inset(0 0 0 0);     translate: -2px 0; }
+  100% { clip-path: none; translate: 0 0; }
+}
+.slide-info {
+  position: absolute; top: 88px; right: clamp(16px, 4vw, 48px);
+  display: flex; gap: 14px; align-items: baseline;
+  font-size: 11px; letter-spacing: .1em; color: var(--fg);
+  text-align: right;
+}
+.slide-count { color: var(--accent); }
+.slide-cap { opacity: .8; white-space: nowrap; }
 .hero-bottom {
   position: absolute; left: clamp(16px, 4vw, 48px); right: clamp(16px, 4vw, 48px); bottom: 64px;
   display: flex; justify-content: space-between; align-items: flex-end; gap: 32px;
 }
 .kicker { color: var(--accent); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 12px; }
-.intro { max-width: 34ch; font-size: clamp(18px, 2vw, 24px); line-height: 1.35; font-weight: 400; }
+.intro { max-width: 30ch; font-size: clamp(22px, 2.4vw, 34px); text-shadow: 0 1px 24px rgba(0,0,0,.5); line-height: 1.35; font-weight: 400; }
 .latest {
   display: flex; align-items: center; gap: 16px;
   padding: 12px 18px 12px 12px;
@@ -309,14 +330,19 @@ footer {
 
 @media (max-width: 760px) {
   .hero-bottom { flex-direction: column; align-items: stretch; gap: 20px; bottom: 56px; }
-  .hero-core { top: 38%; }
   .wordmark { display: none; }
   .scroll { display: none; }
   .badge.huge { width: 34%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-core .badge { animation: none; }
+  .slide, .slide img, .slide.is-active img, .slide.glitch img { animation: none; transition: none; }
 }
 @media (max-width: 760px) {
   .kicker { font-size: 10px; letter-spacing: .08em; }
+}
+@media (max-width: 760px) {
+  .slide-info { top: 76px; left: 16px; right: 16px; justify-content: space-between; text-align: left; }
+}
+@media (max-width: 760px) {
+  .slide-cap { white-space: normal; }
 }

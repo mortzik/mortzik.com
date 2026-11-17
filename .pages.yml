@@ -77,6 +77,14 @@ content:
     format: yaml
     fields:
       - { name: intro, label: Intro line (top of the site), type: text }
+      - name: hero_slides
+        label: Hero slides (full-screen photos at the top)
+        description: Landscape photos work best. They fade in this order.
+        type: object
+        list: true
+        fields:
+          - { name: image, label: Photo, type: image }
+          - { name: caption, label: Caption, type: string }
       - { name: tagline, label: Tagline, type: string }
       - { name: bio, label: Bio, type: text, description: "Leave an empty line between paragraphs." }
       - { name: portrait, label: Portrait photo, type: image, description: "Shown next to the bio. Leave empty to show the logo." }
