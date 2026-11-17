@@ -160,11 +160,13 @@
                   referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         {%- if yt_videos.size > 0 and s.youtube_playlist == "" %}
+        <div class="video-side">
         <ol class="video-list">
           {%- for v in yt_videos %}
           <li><button type="button" data-url="{{ v.url | escape }}"><span class="mono vn">{{ forloop.index | prepend: "0" | slice: -2, 2 }}</span><span class="vt">{{ v.title | default: "Untitled" }}</span>{% if v.note != "" and v.note %}<span class="mono vm">{{ v.note }}</span>{% endif %}</button></li>
           {%- endfor %}
         </ol>
+        </div>
         {%- endif %}
       </div>
       <p class="more-link mono"><a href="https://www.youtube.com/@Mortzik" target="_blank" rel="noopener">More on YouTube ↗</a></p>
