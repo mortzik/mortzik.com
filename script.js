@@ -219,9 +219,10 @@
   const play = (i, autoplay) => {
     const id = ids[i];
     if (!id) return;
-    // queue the remaining videos so the player continues through the list
-    const rest = ids.slice(i + 1).concat(ids.slice(0, i)).filter(Boolean).join(",");
-    frame.src = `${base}${id}?${params}${rest ? `&playlist=${rest}` : ""}${autoplay ? "&autoplay=1" : ""}`;
+    // YouTube plays the "playlist" queue from its first entry, so the chosen
+    // video must lead the queue, followed by the rest of the list in order.
+    const queue = [id].concat(ids.slice(i + 1), ids.slice(0, i)).filter(Boolean).join(",");
+    frame.src = `${base}${id}?${params}&playlist=${queue}${autoplay ? "&autoplay=1" : ""}`;
     buttons.forEach((b, j) => b.setAttribute("aria-current", String(j === i)));
   };
   buttons.forEach((b, i) => b.addEventListener("click", () => play(i, true)));
