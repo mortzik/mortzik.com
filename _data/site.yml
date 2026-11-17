@@ -14,7 +14,28 @@ email: mortzik@icloud.com
 spotify_artist_id: 0WtDQZO3kj4LH0rTwA5Lis
 soundcloud_url: https://soundcloud.com/mortzik
 youtube_playlist: ""
-youtube_videos: []
+youtube_videos:
+  - url: https://www.youtube.com/watch?v=mJnYMX5117U
+    title: Fractal
+    note: 2024 · Audio-visual · with Enhenā
+  - url: https://www.youtube.com/watch?v=M2KYY8_SUVE
+    title: V.04
+    note: 2026 · Music · visual by Helia Jalnick
+  - url: https://www.youtube.com/watch?v=5CEJTi5G7ks
+    title: Luminary
+    note: 2021 · Bright Festival · with Amir Mahrav
+  - url: https://www.youtube.com/watch?v=AOpnMqDq3uM
+    title: Dah Dah
+    note: 2025 · Sound design · Enhenā
+  - url: https://www.youtube.com/shorts/KQOJxJw-7hw
+    title: Dah Dah (short)
+    note: 2025 · Short
+  - url: https://www.youtube.com/shorts/jawlliKhSUU
+    title: Fractal (short)
+    note: 2024 · Short
+  - url: https://www.youtube.com/shorts/6iZJusRwNGw
+    title: Chute
+    note: 2024 · Single
 listen_links:
   - label: Spotify
     url: https://open.spotify.com/artist/0WtDQZO3kj4LH0rTwA5Lis
