@@ -22,7 +22,7 @@ content:
         type: select
         options:
           values: [Single, EP, Album, Soundtrack, Remix]
-      - { name: credit, label: Credits / note, type: string, description: "e.g. Art by Amirali Khatibi" }
+      - { name: credit, label: Credits / note, type: string, description: "e.g. Art by [Name](https://…) or @handle" }
       - { name: cover, label: Cover art, type: image, description: "Square image, ideally 1000–1600 px." }
       - { name: link, label: Listen link, type: string, description: "Spotify / SoundCloud / etc. Leave empty to use the Spotify artist page." }
       - { name: featured, label: Show as latest release, type: boolean, default: false, description: "Tick one release to feature it at the top of the site." }
@@ -38,8 +38,8 @@ content:
       - { name: title, label: Title, type: string, required: true }
       - { name: year, label: Year, type: string }
       - { name: category, label: Category, type: string, description: "e.g. Sound design, Audio-visual, Bright Festival, Leipzig" }
-      - { name: description, label: Description, type: text }
-      - { name: credit, label: Credits, type: string, description: "e.g. Music: Mortzik · Visual: Helia Jalnick" }
+      - { name: description, label: Description, type: text, description: "Links: [Name](https://…). Instagram: just type @handle." }
+      - { name: credit, label: Credits, type: string, description: "e.g. Visual: [Helia Jalnick](https://instagram.com/heliajalnick) — or just @heliajalnick" }
       - { name: image, label: Image, type: image }
       - { name: link, label: Link, type: string }
       - { name: link_label, label: Link text, type: string, description: "e.g. Watch on YouTube" }

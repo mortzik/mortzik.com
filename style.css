@@ -142,9 +142,9 @@ main { counter-reset: sec; }
 .work:hover img { filter: none; }
 .work .meta { font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: .14em; }
 .work h3 { font-size: 24px; font-weight: 500; letter-spacing: -.01em; }
-.work p { color: var(--dim); font-size: 15px; }
-.work a { margin-top: auto; font-size: 12px; text-decoration: none; color: var(--fg); }
-.work a:hover { color: var(--accent); }
+.work p, .work .desc p { color: var(--dim); font-size: 15px; margin: 0; }
+.work > a { margin-top: auto; font-size: 12px; text-decoration: none; color: var(--fg); }
+.work > a:hover { color: var(--accent); }
 .work.more { background: #0b0b10; }
 
 /* Contact */
@@ -399,3 +399,12 @@ footer {
 .video-list .vt { font-size: 16px; font-weight: 400; }
 .video-list .vm { grid-column: 2; font-size: 11px; letter-spacing: .06em; color: var(--dim); }
 @media (max-width: 760px) { .video.with-list { grid-template-columns: 1fr; } .video-side { min-height: 0; } .video-list { position: static; max-height: 360px; } }
+
+/* Links inside project text and credits (markdown links and @handles) */
+.work .desc a, .work .credit a, .releases .c a {
+  font: inherit;
+  margin: 0; color: var(--fg); text-decoration: underline;
+  text-decoration-color: rgba(233,233,238,.35); text-underline-offset: 3px;
+  transition: color .2s, text-decoration-color .2s;
+}
+.work .desc a:hover, .work .credit a:hover, .releases .c a:hover { color: var(--accent); text-decoration-color: var(--accent); }

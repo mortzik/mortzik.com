@@ -234,3 +234,32 @@
     if (one) frame.src = `${base}${one}?${params}`;
   }
 })();
+
+// Turn @handles in project text and credits into Instagram links
+(() => {
+  const RE = /(^|[\s(,·])@([A-Za-z0-9_](?:[A-Za-z0-9_.]{0,28}[A-Za-z0-9_])?)/g;
+  document.querySelectorAll(".work .desc, .work .credit, .releases .c").forEach(root => {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) if (!walker.currentNode.parentElement.closest("a")) nodes.push(walker.currentNode);
+    nodes.forEach(node => {
+      const text = node.nodeValue;
+      if (!RE.test(text)) return;
+      RE.lastIndex = 0;
+      const frag = document.createDocumentFragment();
+      let last = 0, m;
+      while ((m = RE.exec(text))) {
+        const start = m.index + m[1].length;
+        frag.append(text.slice(last, start));
+        const a = document.createElement("a");
+        a.href = `https://www.instagram.com/${m[2]}/`;
+        a.target = "_blank"; a.rel = "noopener";
+        a.textContent = "@" + m[2];
+        frag.append(a);
+        last = start + 1 + m[2].length;
+      }
+      frag.append(text.slice(last));
+      node.replaceWith(frag);
+    });
+  });
+})();
