@@ -3,12 +3,11 @@
 //   grid     – step-sequencer squares playing polyrhythms
 //   karbandi – rotating star polygons (Iranian geometry)
 //   ink      – particles drifting along a slow current
-//   signal   – photos with scanlines, a sweeping band and glitch tears
 // The default comes from data-motion on .hero ("random" = new pick each visit).
 (() => {
   const hero = document.querySelector(".hero");
   if (!hero) return;
-  const MODES = ["photos", "grid", "karbandi", "ink", "signal"];
+  const MODES = ["photos", "grid", "karbandi", "ink"];
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const pad = n => String(n).padStart(2, "0");
 
@@ -132,50 +131,6 @@
       q.x = nx; q.y = ny;
       if (q.x < 0 || q.x > W || q.y < 0 || q.y > H || Math.random() < 0.002) { q.x = Math.random() * W; q.y = Math.random() * H; }
     }
-  };
-
-  // signal: hero photos drawn with scanlines, a sweeping band and glitch tears
-  let sigImgs = null;
-  init.signal = () => {
-    if (!sigImgs) {
-      sigImgs = slides.map(s => {
-        const el = s.querySelector("img"), img = new Image();
-        img.src = el.getAttribute("src") || el.dataset.src;
-        return img;
-      });
-    }
-    st = { i: 0, start: performance.now(), burst: 0 };
-  };
-  draw.signal = t => {
-    const s = st, HOLD = 7000;
-    ctx.fillStyle = BG; ctx.fillRect(0, 0, W, H);
-    if (!sigImgs || !sigImgs.length) return;
-    if (t - s.start > HOLD) { s.i = (s.i + 1) % sigImgs.length; s.start = t; s.burst = 14; }
-    const img = sigImgs[s.i];
-    if (!img.complete || !img.naturalWidth) return;
-    const k = Math.max(0, (t - s.start) / HOLD);
-    const r = Math.max(W / img.naturalWidth, H / img.naturalHeight) * (1.04 + 0.06 * k);
-    const w = img.naturalWidth * r, h = img.naturalHeight * r;
-    ctx.globalAlpha = Math.min(1, Math.max(0, (t - s.start) / 900)) * 0.8;
-    ctx.drawImage(img, (W - w) / 2, (H - h) / 2, w, h);
-    ctx.globalAlpha = 1;
-    if (s.burst > 0 || Math.random() < 0.02) {
-      s.burst = Math.max(0, s.burst - 1);
-      for (let n = 0; n < 3; n++) {
-        const sy = Math.random() * H, sh = 4 + Math.random() * 46, dx = (Math.random() - 0.5) * 80;
-        ctx.drawImage(cv, 0, sy * dpr, W * dpr, sh * dpr, dx, sy, W, sh);
-        ctx.globalCompositeOperation = "screen";
-        ctx.fillStyle = "rgba(255,42,109,.18)"; ctx.fillRect(dx - 6, sy, W, sh);
-        ctx.fillStyle = "rgba(5,217,232,.14)"; ctx.fillRect(dx + 6, sy, W, sh);
-        ctx.globalCompositeOperation = "source-over";
-      }
-    }
-    const by = ((t / 5200) % 1) * (H + 200) - 100;
-    const g = ctx.createLinearGradient(0, by - 60, 0, by + 60);
-    g.addColorStop(0, `rgba(${PAPER},0)`); g.addColorStop(.5, `rgba(${PAPER},.07)`); g.addColorStop(1, `rgba(${PAPER},0)`);
-    ctx.fillStyle = g; ctx.fillRect(0, by - 60, W, 120);
-    ctx.fillStyle = "rgba(0,0,0,.28)";
-    for (let yy = 0; yy < H; yy += 3) ctx.fillRect(0, yy, W, 1);
   };
 
   function loop(t) {

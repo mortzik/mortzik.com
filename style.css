@@ -359,8 +359,8 @@ footer {
 .hero:not([data-active="photos"]) .slide-info { visibility: hidden; }
 .hero:not([data-active="photos"]) .hero-canvas { opacity: 1; }
 .motion-switch {
-  position: absolute; top: 84px; left: clamp(16px, 4vw, 48px);
-  display: flex; flex-wrap: wrap; gap: 4px;
+  position: absolute; z-index: 5; bottom: 22px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 4px;
 }
 .motion-switch button {
   font: 10px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase;
@@ -372,7 +372,7 @@ footer {
 .motion-switch button[aria-pressed="true"] { color: var(--bg); background: var(--paper); border-color: var(--paper); }
 .motion-switch button:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
 @media (max-width: 760px) {
-  .motion-switch { top: auto; bottom: 14px; left: 16px; right: 16px; }
+  .motion-switch { bottom: 14px; left: 16px; right: 16px; transform: none; }
   .slide-info { top: 76px; }
   .hero-bottom { bottom: 64px; }
 }

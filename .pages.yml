@@ -74,7 +74,7 @@ content:
         description: '"random" picks a different one on every visit.'
         type: select
         options:
-          values: [random, photos, grid, karbandi, ink, signal]
+          values: [random, photos, grid, karbandi, ink]
       - { name: show_motion_switcher, label: Show background buttons on the site, type: boolean }
       - name: hero_slides
         label: Hero slides (full-screen photos at the top)

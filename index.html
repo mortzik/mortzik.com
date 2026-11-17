@@ -31,7 +31,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/style.css?v={{ site.time | date: '%s' }}">
 </head>
 <body>
   <div class="grain" aria-hidden="true"></div>
@@ -57,7 +57,7 @@
   </svg>
 
   <main id="top">
-    <!-- HERO: switchable background (photos, grid, karbandi, ink, signal). Default set in panel. -->
+    <!-- HERO: switchable background (photos, grid, karbandi, ink). Default set in panel. -->
     <section class="hero" data-motion="{{ s.hero_motion | default: 'random' }}">
       <!-- Full-screen slideshow of installation photos (edit in panel: Bio, links & contact → Hero slides) -->
       <div class="hero-media" aria-hidden="true">
@@ -96,11 +96,9 @@
         <button type="button" data-mode="grid">Grid</button>
         <button type="button" data-mode="karbandi">Karbandi</button>
         <button type="button" data-mode="ink">Ink</button>
-        <button type="button" data-mode="signal">Signal</button>
         <button type="button" data-mode="shuffle" aria-label="Random background">↻</button>
       </div>
       {%- endif %}
-      <a href="#about" class="scroll mono" aria-label="Scroll down">scroll ↓</a>
     </section>
 
     <!-- ABOUT -->
@@ -229,6 +227,6 @@
     <span>mortzik.com</span>
   </footer>
 
-  <script src="/script.js"></script>
+  <script src="/script.js?v={{ site.time | date: '%s' }}"></script>
 </body>
 </html>
