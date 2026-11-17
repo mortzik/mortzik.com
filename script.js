@@ -20,14 +20,19 @@
     w = window.innerWidth; h = window.innerHeight;
     canvas.width = w * dpr; canvas.height = h * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    cx = w / 2; cy = h / 2;
+    // centre the rings on the monogram in the hero
+    const core = document.querySelector(".hero-core .badge");
+    if (core) {
+      const r = core.getBoundingClientRect();
+      cx = r.left + r.width / 2; cy = r.top + r.height / 2 + window.scrollY;
+    } else { cx = w / 2; cy = h / 2; }
     maxR = Math.min(Math.hypot(w, h) * 0.42, 720);
   }
 
   window.addEventListener("resize", resize);
   window.addEventListener("pointermove", e => {
-    tx = (e.clientX / w - 0.5) * 30;
-    ty = (e.clientY / h - 0.5) * 30;
+    tx = (e.clientX / w - 0.5) * 12;
+    ty = (e.clientY / h - 0.5) * 12;
   });
 
   function frame(t) {
@@ -40,10 +45,16 @@
     ctx.clearRect(0, 0, w, h);
     ctx.globalAlpha = 1 - scroll * 0.6;
 
+    // keep the rings centred on the monogram (it moves with the page)
+    const core = document.querySelector(".hero-core .badge");
+    if (core) {
+      const cr = core.getBoundingClientRect();
+      cx = cr.left + cr.width / 2; cy = cr.top + cr.height / 2;
+    }
     const ox = cx + mx, oy = cy + my;
 
     RINGS.forEach((n, i) => {
-      const r = maxR * (0.25 + (i / (RINGS.length - 1)) * 0.75);
+      const r = maxR * (0.2 + (i / (RINGS.length - 1)) * 0.8);
       const color = COLORS[i % COLORS.length];
 
       // ring
@@ -116,7 +127,6 @@
     requestAnimationFrame(frame);
   }
 
-  document.getElementById("year").textContent = new Date().getFullYear();
 })();
 
 // Lightbox for the gallery

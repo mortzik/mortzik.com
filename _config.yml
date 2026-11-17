@@ -1,0 +1,6 @@
+# Jekyll settings (GitHub Pages builds the site from this automatically)
+title: Mortzik
+url: https://mortzik.com
+exclude:
+  - README.md
+  - .pages.yml

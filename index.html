@@ -1,27 +1,43 @@
+---
+# This page is built by Jekyll from the files in _data/.
+# Edit content in the panel (Pages CMS) or in _data/*.yml, not here.
+---
+{%- assign s = site.data.site -%}
+{%- assign releases = site.data.releases -%}
+{%- assign latest = releases | where: "featured", true | first -%}
+{%- unless latest %}{% assign latest = releases | first %}{% endunless -%}
+{%- assign artist_url = "https://open.spotify.com/artist/" | append: s.spotify_artist_id -%}
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mortzik — Electronic Music Producer &amp; Composer</title>
-  <meta name="description" content="Mortzik is an Iranian electronic music producer and soundtrack composer exploring the intersection of sound and perception through polyrhythms and immersive soundscapes.">
+  <meta name="description" content="{{ s.intro | escape }}">
   <meta property="og:title" content="Mortzik">
-  <meta property="og:description" content="Electronic music producer, soundtrack composer and audio-visual artist.">
+  <meta property="og:description" content="{{ s.intro | escape }}">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://mortzik.com/">
+  <meta property="og:image" content="https://mortzik.com/assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#07070a">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/icon-512.png" type="image/png" sizes="512x512">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <canvas id="field" aria-hidden="true"></canvas>
   <div class="grain" aria-hidden="true"></div>
 
   <header class="nav">
-    <a href="#top" class="nav-logo">MRTZK</a>
+    <a href="#top" class="brand" aria-label="Mortzik, back to top">
+      <span class="badge"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#mark"/></svg></span>
+      <span class="mono wordmark">MORTZIK</span>
+    </a>
     <nav>
       <a href="#about">About</a>
       <a href="#listen">Music</a>
@@ -31,17 +47,41 @@
     </nav>
   </header>
 
+  <!-- Monogram, defined once and reused -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <clipPath id="mark-clip"><circle cx="32" cy="32" r="23.8"/></clipPath>
+      <g id="mark" fill="none" stroke="currentColor" stroke-width="3.6">
+        <circle cx="32" cy="32" r="22"/>
+        <path clip-path="url(#mark-clip)" d="M17.86 50V15.15L32 34l14.14-18.85V50"/>
+      </g>
+    </defs>
+  </svg>
+
   <main id="top">
-    <!-- HERO -->
+    <!-- HERO: the monogram sits at the centre of the polyrhythm rings -->
     <section class="hero">
-      <p class="mono kicker">// electronic music · soundtrack · audio-visual</p>
-      <h1 class="glitch" data-text="MORTZIK">MORTZIK</h1>
-      <p class="tagline">Sound, perception &amp; polyrhythm.</p>
-      <div class="hero-links">
-        <a class="btn" href="https://open.spotify.com/artist/0WtDQZO3kj4LH0rTwA5Lis" target="_blank" rel="noopener">Spotify</a>
-        <a class="btn" href="https://soundcloud.com/mortzik" target="_blank" rel="noopener">SoundCloud</a>
-        <a class="btn" href="https://www.youtube.com/@Mortzik" target="_blank" rel="noopener">YouTube</a>
-        <a class="btn" href="https://www.instagram.com/mortzik" target="_blank" rel="noopener">Instagram</a>
+      <div class="hero-core" aria-hidden="true">
+        <span class="badge big"><svg viewBox="0 0 64 64"><use href="#mark"/></svg></span>
+      </div>
+      <h1 class="sr-only">Mortzik</h1>
+
+      <div class="hero-bottom">
+        <div class="hero-intro">
+          <p class="mono kicker">electronic music · soundtrack · audio-visual</p>
+          <p class="intro">{{ s.intro }}</p>
+        </div>
+        {%- if latest %}
+        {%- assign latest_link = latest.link | default: artist_url %}
+        <a class="latest" href="{{ latest_link }}" target="_blank" rel="noopener">
+          {%- if latest.cover != "" and latest.cover %}<img src="{{ latest.cover | replace: '/images/web/', '/images/thumbs/' }}" alt="" width="72" height="72">{% endif %}
+          <span>
+            <span class="mono meta">Latest release · {{ latest.year }}</span>
+            <span class="latest-title">{{ latest.title }}</span>
+            <span class="mono listen">Listen ↗</span>
+          </span>
+        </a>
+        {%- endif %}
       </div>
       <a href="#about" class="scroll mono" aria-label="Scroll down">scroll ↓</a>
     </section>
@@ -50,118 +90,65 @@
     <section id="about" class="section">
       <h2 class="mono label"><span>01</span> About</h2>
       <div class="about-grid">
-        <!-- When you have a photo: put it in images/ and replace this div with
-             <img class="portrait" src="images/portrait.jpg" alt="Mortzik"> -->
+        {%- if s.portrait != "" and s.portrait %}
+        <img class="portrait" src="{{ s.portrait }}" alt="Mortzik">
+        {%- else %}
         <div class="portrait placeholder" aria-hidden="true">
-          <span class="mono">3 : 4 : 5 : 7</span>
+          <span class="badge huge"><svg viewBox="0 0 64 64"><use href="#mark"/></svg></span>
         </div>
+        {%- endif %}
         <div class="about-text">
-          <p class="lead">Mortzik is an Iranian electronic music producer and soundtrack composer with a background in electronics engineering.</p>
-          <p>His work explores the intersection of sound and perception, drawing inspiration from synesthesia to craft intricate polyrhythms and immersive soundscapes. Through his compositions, Mortzik challenges listeners to explore new dimensions of music, pushing the boundaries of genre and emotion.</p>
-          <p>Discover his sonic world and join him on this artistic journey.</p>
+          {{ s.bio | markdownify }}
         </div>
       </div>
     </section>
 
-    <!-- LISTEN -->
+    <!-- MUSIC -->
     <section id="listen" class="section">
       <h2 class="mono label"><span>02</span> Music</h2>
       <div class="players">
         <div class="player">
-          <iframe title="Mortzik on Spotify" src="https://open.spotify.com/embed/artist/0WtDQZO3kj4LH0rTwA5Lis?utm_source=generator&theme=0" height="452" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+          <iframe title="Mortzik on Spotify" src="https://open.spotify.com/embed/artist/{{ s.spotify_artist_id }}?utm_source=generator&theme=0" height="452" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
         </div>
         <div class="player">
-          <iframe title="Mortzik on SoundCloud" scrolling="no" height="452" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/mortzik&color=%23e6ff3a&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&visual=false"></iframe>
+          <iframe title="Mortzik on SoundCloud" scrolling="no" height="452" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url={{ s.soundcloud_url | url_encode }}&color=%23e6ff3a&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&visual=false"></iframe>
         </div>
       </div>
       <ul class="platforms mono">
-        <li><a href="https://open.spotify.com/artist/0WtDQZO3kj4LH0rTwA5Lis" target="_blank" rel="noopener">Spotify ↗</a></li>
-        <li><a href="https://music.apple.com/ae/artist/mortzik/1685812974" target="_blank" rel="noopener">Apple Music ↗</a></li>
-        <li><a href="https://soundcloud.com/mortzik" target="_blank" rel="noopener">SoundCloud ↗</a></li>
-        <li><a href="https://music.youtube.com/channel/UCwl241HIEt8LOgJumfMFj_A" target="_blank" rel="noopener">YouTube Music ↗</a></li>
-        <li><a href="https://music.amazon.com/artists/B0C434X5QJ/mortzik" target="_blank" rel="noopener">Amazon Music ↗</a></li>
-        <li><a href="https://www.youtube.com/@Mortzik" target="_blank" rel="noopener">YouTube ↗</a></li>
+        {%- for l in s.listen_links %}
+        <li><a href="{{ l.url }}" target="_blank" rel="noopener">{{ l.label }} ↗</a></li>
+        {%- endfor %}
       </ul>
 
       <h3 class="mono sublabel">Releases</h3>
       <ol class="releases">
-        <li><span class="mono yr">2025</span><span class="t"><img class="cover" src="images/thumbs/constructed.jpg" alt="Constructed cover art" loading="lazy" width="48" height="48">Constructed</span><span class="c">Composed for the Constructed digital art gallery · art by @moonesaa</span></li>
-        <li><span class="mono yr">2024</span><span class="t"><img class="cover" src="images/thumbs/chute.jpg" alt="Chute cover art" loading="lazy" width="48" height="48">Chute</span><span class="c">Single</span></li>
-        <li><span class="mono yr">2024</span><span class="t"><img class="cover" src="images/thumbs/pale.jpg" alt="Pale cover art" loading="lazy" width="48" height="48">Pale</span><span class="c">Single</span></li>
-        <li><span class="mono yr">2024</span><span class="t"><img class="cover" src="images/thumbs/over-fellow.jpg" alt="Over Fellow cover art" loading="lazy" width="48" height="48">Over Fellow</span><span class="c">Single · art by Mortzik</span></li>
-        <li><span class="mono yr">2023</span><span class="t"><img class="cover" src="images/thumbs/quest.jpg" alt="Quest cover art" loading="lazy" width="48" height="48">Quest</span><span class="c">Single · art by Amirali Khatibi</span></li>
-        <li><span class="mono yr">2023</span><span class="t"><img class="cover" src="images/thumbs/suspense.jpg" alt="Suspense cover art" loading="lazy" width="48" height="48">Suspense</span><span class="c">Single · cover &amp; motion by Amirali Khatibi</span></li>
-        <li><span class="mono yr">2023</span><span class="t"><img class="cover" src="images/thumbs/enforced.jpg" alt="Enforced cover art" loading="lazy" width="48" height="48">Enforced</span><span class="c">Single · art &amp; motion by Amirali Khatibi</span></li>
-        <li><span class="mono yr">2018</span><span class="t"><img class="cover" src="images/thumbs/exordium.jpg" alt="Exordium cover art" loading="lazy" width="48" height="48">Exordium</span><span class="c">Debut solo EP</span></li>
+        {%- for r in releases %}
+        <li>
+          <span class="mono yr">{{ r.year }}</span>
+          <a class="t" href="{{ r.link | default: artist_url }}" target="_blank" rel="noopener">
+            {%- if r.cover != "" and r.cover %}<img class="cover" src="{{ r.cover | replace: '/images/web/', '/images/thumbs/' }}" alt="{{ r.title }} cover art" loading="lazy" width="48" height="48">{% endif %}{{ r.title }}</a>
+          <span class="c">{{ r.type }}{% if r.credit != "" and r.credit %} · {{ r.credit }}{% endif %}</span>
+        </li>
+        {%- endfor %}
       </ol>
     </section>
 
     <!-- WORKS -->
     <section id="works" class="section">
       <h2 class="mono label"><span>03</span> Audio-visual &amp; sound design</h2>
-      <!-- To add an image to a card: put it in images/ and add
-           <img src="images/xxx.jpg" alt="..."> as the first element inside the <article>. -->
       <div class="works">
+        {%- for w in site.data.works %}
         <article class="work">
-          <img src="images/thumbs/v04.jpg" alt="Still from V.04" loading="lazy">
-          <p class="mono meta">2026 · Music</p>
-          <h3>V.04</h3>
-          <p>&ldquo;Not a reconstruction, but the echo of a transformation.&rdquo; A short audio-visual account of the year.</p>
-          <p class="credit mono">Music: Mortzik · Visual: Helia Jalnick</p>
+          {%- if w.image != "" and w.image %}
+          <img src="{{ w.image | replace: '/images/web/', '/images/thumbs/' }}" alt="{{ w.title }}" loading="lazy">
+          {%- endif %}
+          <p class="mono meta">{% if w.year != "" and w.year %}{{ w.year }} · {% endif %}{{ w.category }}</p>
+          <h3>{{ w.title }}</h3>
+          <p>{{ w.description }}</p>
+          {%- if w.credit != "" and w.credit %}<p class="credit mono">{{ w.credit }}</p>{% endif %}
+          {%- if w.link != "" and w.link %}<a class="mono" href="{{ w.link }}" target="_blank" rel="noopener">{{ w.link_label | default: "View project" }} ↗</a>{% endif %}
         </article>
-        <article class="work">
-          <img src="images/thumbs/constructed.jpg" alt="Constructed album art" loading="lazy">
-          <p class="mono meta">2025 · Exhibition music</p>
-          <h3>Constructed</h3>
-          <p>The sonic narrative for the Constructed digital art gallery: human perception leaving solid ground to dive into an ocean of code, where biology and technology intertwine.</p>
-          <p class="credit mono">Curated by Wenodes · Dayhim Art Society · with New Media Art</p>
-        </article>
-        <article class="work">
-          <p class="mono meta">2025 · Sound design</p>
-          <h3>Dah Dah / Enhena</h3>
-          <p>A generative experiment inspired by karbandi and the multi-pointed stars of Iranian geometry: a frame-by-frame motion piece drawn by a CNC machine on paper across 180 frames.</p>
-          <a class="mono" href="https://enhena.com/community/mortzik/" target="_blank" rel="noopener">Enhena ↗</a>
-        </article>
-        <article class="work">
-          <img src="images/thumbs/fractal.jpg" alt="Fractal artwork" loading="lazy">
-          <p class="mono meta">2024 · Audio-visual</p>
-          <h3>Fractal</h3>
-          <p>An audio-visual narration inspired by eternal inflation, fractals, black holes and string theory: self-repetition, timelessness and endless expansion in a borderless world.</p>
-          <p class="credit mono">Audio: Mortzik · Visual: Amirali Khatibi, Helia Jalnick</p>
-        </article>
-        <article class="work">
-          <p class="mono meta">2024 · Sound design</p>
-          <h3>Inner Portal</h3>
-          <p>What happens when you look in the mirror too long? A one-minute piece about the mirror as a gateway into the inner world.</p>
-          <p class="credit mono">With @ch.hosseinn, @peyman_taslimi, @mohammadbeigg</p>
-        </article>
-        <article class="work">
-          <p class="mono meta">2022 · Sound design</p>
-          <h3>Razer Portal</h3>
-          <p>Sound design for &ldquo;RΛZΞR PORTAL&rdquo;, part of Razer &times; Motion Designers Community&rsquo;s Enter the Metaverse.</p>
-          <p class="credit mono">CGI: @babakjamcg</p>
-        </article>
-        <article class="work">
-          <img src="images/thumbs/brightfestival10.jpg" alt="Luminary at Kunstkraftwerk Leipzig" loading="lazy">
-          <p class="mono meta">2021 · Bright Festival, Leipzig</p>
-          <h3>Luminary</h3>
-          <p>An audio-visual installation in the Boiler Hall of Kunstkraftwerk Leipzig, one of seven works selected by New Media Art for Bright Festival&rsquo;s first new media showcase.</p>
-          <p class="credit mono">With Amir Mahrav · 21&ndash;24 Oct 2021</p>
-        </article>
-        <article class="work">
-          <img src="images/thumbs/tcs-2-09-e-img_6240.jpg" alt="NOXTE IV at Bethanien, Berlin" loading="lazy">
-          <p class="mono meta">2021 · TCS Berlin</p>
-          <h3>NOXTE IV</h3>
-          <p>Exhibition curated by the Nullsight collective during Tehran Contemporary Sounds 2021 at Bethanien Studio 1, Berlin, presented remotely from Iran.</p>
-          <p class="credit mono">With Amir Mahrav · 22&ndash;24 Oct 2021</p>
-          <a class="mono" href="https://tehrancontemporarysounds.com/past-events-2/tcs-2021/" target="_blank" rel="noopener">TCS 2021 ↗</a>
-        </article>
-        <article class="work">
-          <p class="mono meta">Collaboration · Sound</p>
-          <h3>The 7th</h3>
-          <p>Sound for <em>The 7th</em>, a work by Amirali Khatibi.</p>
-          <a class="mono" href="https://amiralikhatibi.com/works/the-7th/" target="_blank" rel="noopener">View project ↗</a>
-        </article>
+        {%- endfor %}
       </div>
       <p class="more-link mono"><a href="https://www.instagram.com/mortzik" target="_blank" rel="noopener">More on Instagram @mortzik ↗</a></p>
     </section>
@@ -169,36 +156,24 @@
     <!-- GALLERY -->
     <section id="gallery" class="section">
       <h2 class="mono label"><span>04</span> On site</h2>
-      <h3 class="mono sublabel first">Luminary · Bright Festival · Kunstkraftwerk Leipzig · 2021</h3>
+      {%- for g in site.data.gallery %}
+      <h3 class="mono sublabel{% if forloop.first %} first{% endif %}">{{ g.title }}</h3>
       <div class="gallery">
-        <a class="shot" href="images/web/brightfestival10.jpg" data-caption="Luminary, Bright Festival, Leipzig 2021"><img src="images/thumbs/brightfestival10.jpg" alt="Luminary, Bright Festival, Leipzig 2021" loading="lazy"></a>
-        <a class="shot" href="images/web/brightfestival12.jpg" data-caption="Luminary, Bright Festival, Leipzig 2021"><img src="images/thumbs/brightfestival12.jpg" alt="Luminary, Bright Festival, Leipzig 2021" loading="lazy"></a>
-        <a class="shot" href="images/web/brightfestival9.jpg" data-caption="Luminary, Bright Festival, Leipzig 2021"><img src="images/thumbs/brightfestival9.jpg" alt="Luminary, Bright Festival, Leipzig 2021" loading="lazy"></a>
-        <a class="shot" href="images/web/brightfestival5.jpg" data-caption="Luminary, Bright Festival, Leipzig 2021"><img src="images/thumbs/brightfestival5.jpg" alt="Luminary, Bright Festival, Leipzig 2021" loading="lazy"></a>
+        {%- for ph in g.photos %}
+        <a class="shot" href="{{ ph.image }}" data-caption="{{ ph.caption | default: g.title | escape }}"><img src="{{ ph.image | replace: '/images/web/', '/images/thumbs/' }}" alt="{{ ph.caption | default: g.title | escape }}" loading="lazy"></a>
+        {%- endfor %}
       </div>
-      <h3 class="mono sublabel">NOXTE IV · TCS Berlin · Bethanien · 2021</h3>
-      <div class="gallery">
-        <a class="shot" href="images/web/tcs-2-09-e-img_6240.jpg" data-caption="NOXTE IV, TCS Berlin 2021"><img src="images/thumbs/tcs-2-09-e-img_6240.jpg" alt="NOXTE IV, TCS Berlin 2021" loading="lazy"></a>
-        <a class="shot" href="images/web/tcs-2-06-dsc09404.jpg" data-caption="NOXTE IV, TCS Berlin 2021"><img src="images/thumbs/tcs-2-06-dsc09404.jpg" alt="NOXTE IV, TCS Berlin 2021" loading="lazy"></a>
-        <a class="shot" href="images/web/tcs-2-10-e-img_6245.jpg" data-caption="NOXTE IV, TCS Berlin 2021"><img src="images/thumbs/tcs-2-10-e-img_6245.jpg" alt="NOXTE IV, TCS Berlin 2021" loading="lazy"></a>
-        <a class="shot" href="images/web/tcs-1-05-img_6018.jpg" data-caption="NOXTE IV, TCS Berlin 2021"><img src="images/thumbs/tcs-1-05-img_6018.jpg" alt="NOXTE IV, TCS Berlin 2021" loading="lazy"></a>
-        <a class="shot" href="images/web/tcs-2-12-e-img_6263.jpg" data-caption="NOXTE IV, TCS Berlin 2021"><img src="images/thumbs/tcs-2-12-e-img_6263.jpg" alt="NOXTE IV, TCS Berlin 2021" loading="lazy"></a>
-        <a class="shot" href="images/web/tcs-2-01-dsc09415.jpg" data-caption="NOXTE IV, TCS Berlin 2021"><img src="images/thumbs/tcs-2-01-dsc09415.jpg" alt="NOXTE IV, TCS Berlin 2021" loading="lazy"></a>
-        <a class="shot" href="images/web/tcs-1-04-img_6010.jpg" data-caption="NOXTE IV, TCS Berlin 2021"><img src="images/thumbs/tcs-1-04-img_6010.jpg" alt="NOXTE IV, TCS Berlin 2021" loading="lazy"></a>
-        <a class="shot" href="images/web/tcs-2-07-dsc09405.jpg" data-caption="NOXTE IV, TCS Berlin 2021"><img src="images/thumbs/tcs-2-07-dsc09405.jpg" alt="NOXTE IV, TCS Berlin 2021" loading="lazy"></a>
-      </div>
+      {%- endfor %}
     </section>
 
     <!-- CONTACT -->
     <section id="contact" class="section contact">
       <h2 class="mono label"><span>05</span> Contact</h2>
-      <p class="big">Bookings, commissions &amp; collaborations.</p>
-      <a class="email" href="mailto:mortzik@icloud.com">mortzik@icloud.com</a>
+      <a class="email" href="mailto:{{ s.email }}">{{ s.email }}</a>
       <ul class="socials mono">
-        <li><a href="https://www.instagram.com/mortzik" target="_blank" rel="noopener">Instagram ↗</a></li>
-        <li><a href="https://t.me/mortzik" target="_blank" rel="noopener">Telegram ↗</a></li>
-        <li><a href="https://www.youtube.com/@Mortzik" target="_blank" rel="noopener">YouTube ↗</a></li>
-        <li><a href="https://soundcloud.com/mortzik" target="_blank" rel="noopener">SoundCloud ↗</a></li>
+        {%- for l in s.social_links %}
+        <li><a href="{{ l.url }}" target="_blank" rel="noopener">{{ l.label }} ↗</a></li>
+        {%- endfor %}
       </ul>
     </section>
   </main>
@@ -210,10 +185,10 @@
   </div>
 
   <footer class="mono">
-    <span>© <span id="year">2026</span> Mortzik</span>
+    <span class="foot-brand"><span class="badge small"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#mark"/></svg></span>© <span id="year">{{ site.time | date: "%Y" }}</span> Mortzik</span>
     <span>mortzik.com</span>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="/script.js"></script>
 </body>
 </html>

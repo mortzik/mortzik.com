@@ -1,0 +1,99 @@
+# Editing panel for mortzik.com — open https://app.pagescms.org and pick this repository.
+# Every save in the panel is a commit; GitHub Pages rebuilds the site in about a minute.
+
+media:
+  input: images
+  output: /images
+  categories: [image]
+
+content:
+  - name: releases
+    label: Releases
+    description: Newest first — the order here is the order on the site. The first release (or the one marked "Show as latest") appears in the top section.
+    type: file
+    path: _data/releases.yml
+    format: yaml
+    list:
+      collapsible:
+        collapsed: true
+        summary: "{year} · {title}"
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: year, label: Year, type: string }
+      - name: type
+        label: Type
+        type: select
+        options:
+          values: [Single, EP, Album, Soundtrack, Remix]
+      - { name: credit, label: Credits / note, type: string, description: "e.g. Art by Amirali Khatibi" }
+      - { name: cover, label: Cover art, type: image, description: "Square image, ideally 1000–1600 px." }
+      - { name: link, label: Listen link, type: string, description: "Spotify / SoundCloud / etc. Leave empty to use the Spotify artist page." }
+      - { name: featured, label: Show as latest release, type: boolean, default: false, description: "Tick one release to feature it at the top of the site." }
+
+  - name: works
+    label: Works (audio-visual & sound design)
+    description: Project cards. Drag to reorder; the first one appears first.
+    type: file
+    path: _data/works.yml
+    format: yaml
+    list:
+      collapsible:
+        collapsed: true
+        summary: "{year} · {title}"
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: year, label: Year, type: string }
+      - { name: category, label: Category, type: string, description: "e.g. Sound design, Audio-visual, Bright Festival, Leipzig" }
+      - { name: description, label: Description, type: text }
+      - { name: credit, label: Credits, type: string, description: "e.g. Music: Mortzik · Visual: Helia Jalnick" }
+      - { name: image, label: Image, type: image }
+      - { name: link, label: Link, type: string }
+      - { name: link_label, label: Link text, type: string, description: "e.g. Watch on YouTube" }
+
+  - name: gallery
+    label: Gallery
+    description: Photo groups shown in the "On site" section.
+    type: file
+    path: _data/gallery.yml
+    format: yaml
+    list:
+      collapsible:
+        collapsed: true
+        summary: "{title}"
+    fields:
+      - { name: title, label: Group title, type: string, required: true, description: "e.g. Luminary · Bright Festival · Leipzig · 2021" }
+      - name: photos
+        label: Photos
+        type: object
+        list: true
+        fields:
+          - { name: image, label: Photo, type: image }
+          - { name: caption, label: Caption, type: string }
+
+  - name: site
+    label: Bio, links & contact
+    type: file
+    path: _data/site.yml
+    format: yaml
+    fields:
+      - { name: intro, label: Intro line (top of the site), type: text }
+      - { name: tagline, label: Tagline, type: string }
+      - { name: bio, label: Bio, type: text, description: "Leave an empty line between paragraphs." }
+      - { name: portrait, label: Portrait photo, type: image, description: "Shown next to the bio. Leave empty to show the logo." }
+      - { name: email, label: Contact email, type: string }
+      - { name: spotify_artist_id, label: Spotify artist ID, type: string }
+      - { name: soundcloud_url, label: SoundCloud profile URL, type: string }
+      - name: listen_links
+        label: Streaming links (Music section)
+        type: object
+        list: true
+        fields:
+          - { name: label, label: Name, type: string }
+          - { name: url, label: URL, type: string }
+      - name: social_links
+        label: Social links (Contact section)
+        type: object
+        list: true
+        fields:
+          - { name: label, label: Name, type: string }
+          - { name: url, label: URL, type: string }
