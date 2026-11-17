@@ -251,7 +251,7 @@ footer {
   width: 32px; height: 32px; border-radius: 22%;
   background: var(--paper); color: var(--ink); flex: none;
 }
-.badge svg { width: 62.5%; height: 62.5%; display: block; }
+.badge svg { width: 61%; height: auto; aspect-ratio: 530 / 420; display: block; }
 .badge.small { width: 20px; height: 20px; }
 .badge.big { width: clamp(96px, 11vw, 136px); height: clamp(96px, 11vw, 136px); box-shadow: 0 0 0 1px rgba(242,240,234,.08), 0 0 80px rgba(242,240,234,.12); }
 .badge.huge { width: 44%; height: auto; aspect-ratio: 1; }

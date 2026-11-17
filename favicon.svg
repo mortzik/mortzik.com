@@ -1,1 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="13" fill="#F2F0EA"/><path fill="#0E0E10" transform="translate(12.00 16.44) scale(0.17487)" d="M0 0H14.71L40.16 62.17H41.07L66.58 0H81.5V80H69.69V22.12H68.94L45.26 79.89H35.7L12.3 22.07H11.54V80H0ZM94.5 80V0H123.07Q132.36 0 138.48 3.19Q144.6 6.39 147.66 12.05Q150.72 17.72 150.72 25.13Q150.72 32.43 147.66 38.01Q144.6 43.6 138.48 46.66Q137.35 47.19 136.11 47.68L153.78 80H140.03L123.77 49.72Q123.39 49.72 122.96 49.72H106.58V80ZM106.58 39.41H121.83Q127.79 39.41 131.47 37.69Q135.15 35.97 136.84 32.81Q138.53 29.64 138.53 25.13Q138.53 20.56 136.81 17.26Q135.09 13.96 131.42 12.16Q127.74 10.36 121.78 10.36H106.58ZM166.78 10.36V0H228.74V10.36H203.83V80H191.8V10.36ZM0.32 178V170L42.42 108.36H0V98H57.23V106.05L15.14 167.64H57.56V178ZM70.56 178V98H82.64V136.23H83.6L117.21 98H132.3L100.09 133.97L132.46 178H117.91L92.03 142.3L82.64 153.19V178ZM184.74 134h44v44h-44z"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" width="320" height="320" role="img" aria-label="MRTZK monogram">
+  <title>MRTZK monogram</title>
+  <defs>
+    <clipPath id="mrtzk-rows">
+      <rect x="-60" y="-15" width="640" height="190"/>
+      <rect x="-60" y="215" width="640" height="190"/>
+    </clipPath>
+  </defs>
+  <rect width="320" height="320" rx="40" fill="#F2F0EA"/>
+  <g transform="translate(67.8 88.1) scale(0.3688)">
+    <g clip-path="url(#mrtzk-rows)" fill="none" stroke="#0E0E10" stroke-width="30" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10">
+      <path d="M0,190 V0 L60,90 L120,0 V190"/>
+      <path d="M190,190 V0 H266 A40,40 0 0 1 266,80 H190 M250,80 L322,183"/>
+      <path d="M365,0 H515 M440,0 V190"/>
+      <path d="M190,205 V415"/>
+      <path d="M337,200 L205,315 L337,430"/>
+    </g>
+    <g fill="#0E0E10">
+    <polygon points="-15,215 135,215 135,245 25,375 135,375 135,405 -15,405 -15,375 95,245 -15,245"/>
+      <rect x="410" y="300" width="105" height="105"/>
+    </g>
+  </g>
+</svg>
