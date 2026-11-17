@@ -245,16 +245,16 @@ footer {
   .nav nav a:not(:last-child) { display: none; }
 }
 
-/* Logo badge: one-colour monogram, ink on paper */
+/* Logo badge: MRT/ZK grid monogram, ink on paper */
 .badge {
   display: inline-flex; align-items: center; justify-content: center;
-  width: 30px; height: 30px; border-radius: 50%;
+  width: 32px; height: 32px; border-radius: 22%;
   background: var(--paper); color: var(--ink); flex: none;
 }
-.badge svg { width: 100%; height: 100%; display: block; }
-.badge.small { width: 18px; height: 18px; }
-.badge.big { width: clamp(88px, 11vw, 128px); height: clamp(88px, 11vw, 128px); box-shadow: 0 0 0 1px rgba(242,240,234,.08), 0 0 80px rgba(242,240,234,.12); }
-.badge.huge { width: 42%; height: auto; aspect-ratio: 1; opacity: .9; }
+.badge svg { width: 62.5%; height: 62.5%; display: block; }
+.badge.small { width: 20px; height: 20px; }
+.badge.big { width: clamp(96px, 11vw, 136px); height: clamp(96px, 11vw, 136px); box-shadow: 0 0 0 1px rgba(242,240,234,.08), 0 0 80px rgba(242,240,234,.12); }
+.badge.huge { width: 44%; height: auto; aspect-ratio: 1; }
 .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
 .wordmark { font-weight: 500; letter-spacing: .3em; font-size: 13px; }
 .foot-brand { display: inline-flex; align-items: center; gap: 10px; }
