@@ -280,7 +280,7 @@ a { color: inherit; }
   transition: color .2s;
 }
 .platforms a:hover { color: var(--accent); }
-.pl-icon { width: 54px; height: 54px; display: block; }
+.pl-icon { width: 40px; height: 40px; display: block; }
 .pl-name { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); text-align: center; }
 .platforms a:hover .pl-name { color: var(--fg); }
 
@@ -428,8 +428,8 @@ a.work-img:hover .open, a.work-img:focus-visible .open { opacity: 1; }
 .socials a:hover { color: var(--accent); border-color: var(--accent); }
 
 /* contact logos: same tiles as the streaming logos, three across */
-.contact-links { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 560px; margin-top: 0; }
-@media (max-width: 760px) { .contact-links { grid-template-columns: repeat(3, 1fr); } }
+.contact-links { display: flex; gap: 40px; margin-top: 28px; }
+.contact-links a { padding-left: 0; padding-right: 0; }
 
 /* ---------- Footer ---------- */
 footer {
@@ -459,7 +459,7 @@ footer {
   .video-side { min-height: 0; }
   .video-list { position: static; max-height: 360px; }
   .platforms { grid-template-columns: repeat(3, 1fr); }
-  .pl-icon { width: 44px; height: 44px; }
+  .pl-icon { width: 34px; height: 34px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

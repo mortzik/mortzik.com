@@ -233,11 +233,11 @@
     <!-- CONTACT -->
     <section id="contact" class="section contact">
       <h2 class="section-title"><span>Contact</span></h2>
-      <!-- Email first, then the social links from the panel, all as logos -->
+      <!-- Email as text, then the social links from the panel as logos -->
+      {%- if s.email != "" and s.email %}
+      <a class="email" href="mailto:{{ s.email }}">{{ s.email }}</a>
+      {%- endif %}
       <ul class="platforms contact-links">
-        {%- if s.email != "" and s.email %}
-        <li><a href="mailto:{{ s.email }}" aria-label="Email {{ s.email }}" title="{{ s.email }}"><svg class="pl-icon" aria-hidden="true"><use href="#i-email"/></svg><span class="pl-name mono">Email</span></a></li>
-        {%- endif %}
         {%- for l in s.social_links %}
         {%- assign slug = l.label | downcase | replace: " ", "" | replace: "-", "" %}
         <li><a href="{{ l.url }}" target="_blank" rel="noopener" aria-label="{{ l.label }}" title="{{ l.label }}">
