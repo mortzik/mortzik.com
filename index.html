@@ -142,7 +142,7 @@
       <ul class="platforms">
         {%- for l in s.listen_links %}
         {%- assign slug = l.label | downcase | replace: " ", "" | replace: "-", "" %}
-        <li><a href="{{ l.url }}" target="_blank" rel="noopener" aria-label="{{ l.label }}" title="{{ l.label }}">
+        <li><a href="{{ l.url }}" target="_blank" rel="noopener" aria-label="{{ l.label }}" title="{{ l.label }}" data-brand="{{ slug }}">
           {%- if icon_slugs contains slug %}<svg class="pl-icon" aria-hidden="true"><use href="#i-{{ slug }}"/></svg>{% endif %}<span class="pl-name mono">{{ l.label }}</span></a></li>
         {%- endfor %}
       </ul>
@@ -240,7 +240,7 @@
       <ul class="platforms contact-links">
         {%- for l in s.social_links %}
         {%- assign slug = l.label | downcase | replace: " ", "" | replace: "-", "" %}
-        <li><a href="{{ l.url }}" target="_blank" rel="noopener" aria-label="{{ l.label }}" title="{{ l.label }}">
+        <li><a href="{{ l.url }}" target="_blank" rel="noopener" aria-label="{{ l.label }}" title="{{ l.label }}" data-brand="{{ slug }}">
           {%- if icon_slugs contains slug %}<svg class="pl-icon" aria-hidden="true"><use href="#i-{{ slug }}"/></svg>{% endif %}<span class="pl-name mono">{{ l.label }}</span></a></li>
         {%- endfor %}
       </ul>

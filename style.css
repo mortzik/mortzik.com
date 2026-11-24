@@ -279,7 +279,18 @@ a { color: inherit; }
   color: var(--fg); text-decoration: none;
   transition: color .2s;
 }
-.platforms a:hover { color: var(--accent); }
+.platforms a:hover { color: var(--brand, var(--accent)); }
+/* each logo lights up in its own brand colour (Simple Icons brand data) */
+.platforms a[data-brand="spotify"]      { --brand: #1ED760; }
+.platforms a[data-brand="applemusic"]   { --brand: #FA243C; }
+.platforms a[data-brand="soundcloud"]   { --brand: #FF5500; }
+.platforms a[data-brand="youtubemusic"] { --brand: #FF0000; }
+.platforms a[data-brand="amazonmusic"]  { --brand: #46C3D0; }
+.platforms a[data-brand="youtube"]      { --brand: #FF0000; }
+.platforms a[data-brand="telegram"]     { --brand: #26A5E4; }
+.platforms a[data-brand="instagram"]    { --brand: #FF0069; }
+.platforms a[data-brand="bandcamp"]     { --brand: #408294; }
+.platforms a[data-brand="tidal"]        { --brand: #FFFFFF; }
 .pl-icon { width: 40px; height: 40px; display: block; }
 .pl-name { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); text-align: center; }
 .platforms a:hover .pl-name { color: var(--fg); }
