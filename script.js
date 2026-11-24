@@ -153,3 +153,162 @@
     else target.scrollIntoView({ behavior: "smooth" });
   }));
 })();
+
+// SoundCloud player: SoundCloud's widget plays the audio in a hidden frame;
+// this draws our own dark controls, the track's waveform and the track list.
+(() => {
+  const box = document.querySelector(".sc");
+  if (!box) return;
+  const url = box.dataset.url;
+  const $ = s => box.querySelector(s);
+  const engine = $(".sc-engine"), art = $(".sc-art"), title = $(".sc-title"), link = $(".sc-link");
+  const playBtn = $(".sc-play"), wave = $(".sc-wave"), canvas = wave.querySelector("canvas");
+  const cur = $(".sc-cur"), dur = $(".sc-dur"), list = $(".sc-list");
+  const ctx = canvas.getContext("2d");
+  let widget = null, sounds = [], index = 0, shown = -1, progress = 0, duration = 0, peaks = null, started = false;
+
+  const fmt = ms => { const s = Math.max(0, Math.round(ms / 1000)); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; };
+  const bigArt = u => (u || "").replace("-large.", "-t300x300.");
+
+  // ----- waveform -----
+  function loadPeaks(sound) {
+    peaks = null; draw();
+    const w = sound && sound.waveform_url;
+    if (!w) return;
+    const jsonUrl = w.replace(/\.png(\?.*)?$/, ".json");
+    fetch(jsonUrl).then(r => r.ok ? r.json() : Promise.reject())
+      .then(d => {
+        const s = d.samples || [], max = d.height || Math.max(...s, 1);
+        peaks = s.map(v => v / max);
+        draw();
+      }).catch(() => { peaks = null; draw(); });
+  }
+  function draw() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const W = wave.clientWidth, H = wave.clientHeight;
+    if (!W) return;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    const split = W * progress;
+    if (!peaks) {
+      // no waveform available: a plain progress line
+      ctx.fillStyle = "#3a3a3a"; ctx.fillRect(0, H / 2 - 1, W, 2);
+      ctx.fillStyle = "#ffffff"; ctx.fillRect(0, H / 2 - 1, split, 2);
+      return;
+    }
+    const bar = 2, gap = 1, n = Math.floor(W / (bar + gap));
+    for (let i = 0; i < n; i++) {
+      const a = Math.floor(i * peaks.length / n), b = Math.max(a + 1, Math.floor((i + 1) * peaks.length / n));
+      let v = 0; for (let j = a; j < b; j++) v = Math.max(v, peaks[j] || 0);
+      const h = Math.max(2, v * H), x = i * (bar + gap);
+      ctx.fillStyle = x < split ? "#ffffff" : "#3a3a3a";
+      ctx.fillRect(x, (H - h) / 2, bar, h);
+    }
+  }
+  window.addEventListener("resize", draw);
+
+  // ----- now playing + list -----
+  function showSound(i) {
+    const s = sounds[i];
+    if (!s) return;
+    index = i; shown = i;
+    title.textContent = s.title || `Track ${i + 1}`;
+    if (s.permalink_url) link.href = s.permalink_url;
+    if (s.artwork_url) { art.src = bigArt(s.artwork_url); art.hidden = false; }
+    duration = s.duration || duration;
+    dur.textContent = fmt(duration);
+    [...list.querySelectorAll("button")].forEach((b, j) => b.setAttribute("aria-current", String(j === i)));
+    loadPeaks(s);
+  }
+  function renderList() {
+    list.innerHTML = "";
+    sounds.forEach((s, i) => {
+      const li = document.createElement("li");
+      const b = document.createElement("button");
+      b.type = "button";
+      b.innerHTML = `<span class="sc-n">${String(i + 1).padStart(2, "0")}</span><span class="sc-t"></span><span class="sc-d">${s.duration ? fmt(s.duration) : ""}</span>`;
+      b.querySelector(".sc-t").textContent = s.title || `Track ${i + 1}`;
+      b.setAttribute("aria-current", String(i === index));
+      b.addEventListener("click", () => { started = true; widget.skip(i); });
+      li.append(b); list.append(li);
+    });
+  }
+  // the widget fills in track details in batches; refresh until every track has a title
+  function refreshSounds(tries) {
+    widget.getSounds(list2 => {
+      if (!list2 || !list2.length) return;
+      const changed = list2.length !== sounds.length || list2.some((s, i) => (s.title || "") !== ((sounds[i] && sounds[i].title) || ""));
+      sounds = list2;
+      if (changed) { renderList(); if (!started) { shown = -1; showSound(index); } }
+      if (tries > 0 && sounds.some(s => !s.title)) setTimeout(() => refreshSounds(tries - 1), 1500);
+    });
+  }
+
+  // ----- controls -----
+  playBtn.addEventListener("click", () => { if (!widget) return; started = true; widget.toggle(); });
+  function seekTo(frac) {
+    if (!widget || !duration) return;
+    frac = Math.min(1, Math.max(0, frac));
+    progress = frac; draw();
+    widget.seekTo(frac * duration);
+  }
+  wave.addEventListener("click", e => { const r = wave.getBoundingClientRect(); seekTo((e.clientX - r.left) / r.width); });
+  wave.addEventListener("keydown", e => {
+    if (!duration) return;
+    const step = 5000 / duration;
+    if (e.key === "ArrowRight") { e.preventDefault(); seekTo(progress + step); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); seekTo(progress - step); }
+  });
+
+  function fail() {
+    if (widget) return;
+    box.querySelector(".sc-now").hidden = true;
+    wave.hidden = true; $(".sc-time").hidden = true;
+    list.outerHTML = `<p class="sc-error">The SoundCloud player could not load. <a href="${url}" target="_blank" rel="noopener">Listen on SoundCloud ↗</a></p>`;
+  }
+
+  // ----- start: load the widget API when the Music section comes near the screen -----
+  function boot() {
+    const iframe = document.createElement("iframe");
+    iframe.title = "SoundCloud audio engine";
+    iframe.allow = "autoplay";
+    iframe.tabIndex = -1;
+    iframe.src = "https://w.soundcloud.com/player/?url=" + encodeURIComponent(url) +
+      "&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false";
+    engine.append(iframe);
+    const script = document.createElement("script");
+    script.src = "https://w.soundcloud.com/player/api.js";
+    script.onerror = fail;
+    script.onload = () => {
+      const w = window.SC && window.SC.Widget(iframe);
+      if (!w) return fail();
+      const E = window.SC.Widget.Events;
+      w.bind(E.READY, () => {
+        widget = w;
+        playBtn.disabled = false;
+        refreshSounds(8);
+      });
+      w.bind(E.PLAY, () => {
+        box.classList.add("playing"); playBtn.setAttribute("aria-label", "Pause");
+        w.getCurrentSoundIndex(i => { if (i !== shown) showSound(i); });
+        w.getDuration(d => { duration = d; dur.textContent = fmt(d); });
+      });
+      w.bind(E.PAUSE, () => { box.classList.remove("playing"); playBtn.setAttribute("aria-label", "Play"); });
+      w.bind(E.FINISH, () => { box.classList.remove("playing"); playBtn.setAttribute("aria-label", "Play"); });
+      w.bind(E.PLAY_PROGRESS, e => {
+        progress = e.relativePosition || 0;
+        cur.textContent = fmt(e.currentPosition);
+        wave.setAttribute("aria-valuenow", String(Math.round(progress * 100)));
+        draw();
+      });
+    };
+    document.head.append(script);
+    setTimeout(fail, 12000);
+  }
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); boot(); } }, { rootMargin: "600px" });
+    io.observe(box);
+  } else boot();
+  draw();
+})();

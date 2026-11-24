@@ -116,8 +116,25 @@
         <div class="player">
           <iframe title="Mortzik on Spotify" src="https://open.spotify.com/embed/artist/{{ s.spotify_artist_id }}?utm_source=generator&theme=0" height="452" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
         </div>
-        <div class="player">
-          <iframe title="Mortzik on SoundCloud" scrolling="no" height="452" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url={{ s.soundcloud_url | url_encode }}&color=%23ffffff&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>
+        <!-- SoundCloud: our own dark player. SoundCloud's widget plays the audio from a hidden frame. -->
+        <div class="player sc" data-url="{{ s.soundcloud_url }}">
+          <div class="sc-engine" aria-hidden="true"></div>
+          <div class="sc-now">
+            <img class="sc-art" alt="" hidden>
+            <div class="sc-meta">
+              <p class="sc-title">Loading SoundCloud…</p>
+              <a class="sc-link mono" href="{{ s.soundcloud_url }}" target="_blank" rel="noopener">Open on SoundCloud ↗</a>
+            </div>
+            <button type="button" class="sc-play" aria-label="Play" disabled>
+              <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z" fill="currentColor"/></svg>
+              <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 4.5h4v15h-4zM13.5 4.5h4v15h-4z" fill="currentColor"/></svg>
+            </button>
+          </div>
+          <div class="sc-wave" role="slider" tabindex="0" aria-label="Playback position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <canvas></canvas>
+          </div>
+          <div class="sc-time mono"><span class="sc-cur">0:00</span><span class="sc-dur">0:00</span></div>
+          <ol class="sc-list"></ol>
         </div>
       </div>
       {%- assign icon_slugs = "spotify,applemusic,soundcloud,youtubemusic,amazonmusic,youtube,bandcamp,tidal,instagram,telegram" | split: "," %}
