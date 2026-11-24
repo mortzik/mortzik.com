@@ -202,6 +202,9 @@
           {%- else %}
           <span class="work-img"><img src="{{ w.image | replace: '/images/web/', '/images/thumbs/' }}" alt="{{ w.title }}" loading="lazy"></span>
           {%- endif %}
+          {%- else %}
+          <!-- no image yet: a type tile keeps the grid aligned -->
+          <span class="work-img placeholder" aria-hidden="true"><span>{{ w.title }}</span></span>
           {%- endif %}
           <p class="mono meta">{% if w.year != "" and w.year %}{{ w.year }} · {% endif %}{{ w.category }}</p>
           <h3>{{ w.title }}</h3>

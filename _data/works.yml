@@ -19,9 +19,10 @@
   category: Sound design
   description: A generative experiment inspired by karbandi and the multi-pointed stars of Iranian geometry. A frame-by-frame motion piece drawn by a CNC machine on paper across 180 frames.
   credit: ""
-  image: ""
+  image: /images/web/dah-dah.jpg
   link: https://enhena.com/community/mortzik/
   link_label: Enhena
+  image_link: https://www.youtube.com/watch?v=AOpnMqDq3uM
 - title: Fractal
   year: "2024"
   category: Audio-visual
@@ -67,6 +68,6 @@
   category: Collaboration · Sound
   description: "Sound for *The 7th*, a work by [Amirali Khatibi](https://www.instagram.com/amirkhatiibi/)."
   credit: ""
-  image: ""
+  image: /images/web/the-7th.jpg
   link: https://amiralikhatibi.com/works/the-7th/
   link_label: View project
