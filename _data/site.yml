@@ -48,14 +48,10 @@ listen_links:
   - label: YouTube
     url: https://www.youtube.com/@Mortzik
 social_links:
-  - label: Instagram
-    url: https://www.instagram.com/mortzik
   - label: Telegram
     url: https://t.me/mortzik
-  - label: YouTube
-    url: https://www.youtube.com/@Mortzik
-  - label: SoundCloud
-    url: https://soundcloud.com/mortzik
+  - label: Instagram
+    url: https://www.instagram.com/mortzik
 hero_slides:
   - image: /images/web/brightfestival12.jpg
     caption: Luminary — Bright Festival, Leipzig 2021
