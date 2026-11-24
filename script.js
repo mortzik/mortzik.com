@@ -314,3 +314,17 @@
   } else boot();
   draw();
 })();
+
+// Releases: show the newest few, with a button to reveal the full list
+(() => {
+  const btn = document.querySelector(".more-releases");
+  const list = document.getElementById("release-list");
+  if (!btn || !list) return;
+  btn.addEventListener("click", () => {
+    const open = !list.classList.contains("expanded");
+    list.classList.toggle("expanded", open);
+    btn.setAttribute("aria-expanded", String(open));
+    btn.textContent = open ? btn.dataset.less : btn.dataset.more;
+    if (!open) list.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+})();

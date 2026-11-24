@@ -152,9 +152,10 @@
     <!-- RELEASES -->
     <section id="releases" class="section">
       <h2 class="section-title"><span>Releases</span></h2>
-      <ol class="releases">
+      {%- assign releases_shown = 8 %}
+      <ol class="releases" id="release-list">
         {%- for r in releases %}
-        <li>
+        <li{% if forloop.index > releases_shown %} class="extra"{% endif %}>
           <span class="mono yr">{{ r.year }}</span>
           <a class="t" href="{{ r.link | default: artist_url }}" target="_blank" rel="noopener">
             {%- if r.cover != "" and r.cover %}<img class="cover" src="{{ r.cover | replace: '/images/web/', '/images/thumbs/' }}" alt="{{ r.title }} cover art" loading="lazy" width="48" height="48">{% endif %}{{ r.title }}</a>
@@ -162,6 +163,11 @@
         </li>
         {%- endfor %}
       </ol>
+      {%- if releases.size > releases_shown %}
+      <!-- Only the newest releases show at first; this button reveals the rest -->
+      <button type="button" class="more-releases mono" aria-controls="release-list" aria-expanded="false"
+              data-more="Show all {{ releases.size }} releases" data-less="Show fewer">Show all {{ releases.size }} releases</button>
+      {%- endif %}
     </section>
 
     <!-- VIDEO: a YouTube playlist link, or a list of single videos (edit in panel: Bio, links & contact) -->
