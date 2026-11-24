@@ -289,6 +289,7 @@ a { color: inherit; }
 .platforms a[data-brand="youtube"]      { --brand: #FF0000; }
 .platforms a[data-brand="telegram"]     { --brand: #26A5E4; }
 .platforms a[data-brand="instagram"]    { --brand: #FF0069; }
+.platforms a[data-brand="instagram"]:hover { --icon-fill: url(#ig-grad); }
 .platforms a[data-brand="bandcamp"]     { --brand: #408294; }
 .platforms a[data-brand="tidal"]        { --brand: #FFFFFF; }
 .pl-icon { width: 40px; height: 40px; display: block; }
