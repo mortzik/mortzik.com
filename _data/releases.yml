@@ -1,48 +1,57 @@
 - title: Constructed
   year: "2025"
   type: Album
-  credit: Composed for the Constructed digital art gallery · art by @moonesaa
+  credit: Composed for the Constructed digital art gallery · Cover art by @moonesaa
   cover: /images/web/constructed.jpg
-  link: ""
+  link: https://open.spotify.com/album/79oooc66lQQp7VAvEcK2PJ?si=Xi4TQBreQKKCdlrSbjrxEw
+  featured: false
 - title: Chute
   year: "2024"
   type: Single
-  credit: ""
+  credit: Cover Art by Mortzik
   cover: /images/web/chute.jpg
-  link: ""
+  link: https://open.spotify.com/track/3c6AaIz1fb9OUJVTh8qY79?si=627147d84bb34756
+  featured: false
 - title: Pale
   year: "2024"
   type: Single
-  credit: ""
+  credit: Cover Art by Mortzik
   cover: /images/web/pale.jpg
-  link: ""
+  link: https://open.spotify.com/track/6IHN0QYpUbjEYK55HWCPOL?si=26b4eecbe3884269
+  featured: false
 - title: Over Fellow
   year: "2024"
   type: Single
-  credit: Art by Mortzik
+  credit: Cover Art by Mortzik
   cover: /images/web/over-fellow.jpg
-  link: ""
+  link: https://open.spotify.com/track/0xYniR4K3dEXGNQybPfBPC?si=be5f0ab849414a72
+  featured: false
 - title: Quest
   year: "2023"
   type: Single
-  credit: "Art by [Amirali Khatibi](https://www.instagram.com/amirkhatiibi/)"
+  credit: Cover Art by [Amirali Khatibi](https://www.instagram.com/amirkhatiibi/)
   cover: /images/web/quest.jpg
-  link: ""
+  link: https://open.spotify.com/track/2LYJDVybEU8CI0EnSbHzOc?si=dae6517c02794654
+  featured: false
 - title: Suspense
   year: "2023"
   type: Single
-  credit: "Cover & motion by [Amirali Khatibi](https://www.instagram.com/amirkhatiibi/)"
+  credit: Cover Art by [Amirali Khatibi](https://www.instagram.com/amirkhatiibi/)
   cover: /images/web/suspense.jpg
-  link: ""
+  link: https://open.spotify.com/track/30eTGlKDuRzO0Nefzzu1vg?si=dca47d6bc3984acd
+  featured: false
 - title: Enforced
   year: "2023"
   type: Single
-  credit: "Art & motion by [Amirali Khatibi](https://www.instagram.com/amirkhatiibi/)"
+  credit: Cover Art by [Amirali Khatibi](https://www.instagram.com/amirkhatiibi/)
   cover: /images/web/enforced.jpg
-  link: ""
+  link: https://open.spotify.com/track/5JRONnLK8mTwNhx3Cl1lJe?si=69fa51ab14ec4d14
+  featured: false
 - title: Exordium
   year: "2018"
   type: EP
-  credit: Debut solo EP
+  credit: Debut solo EP . Cover Art by
+    [Babakjam](https://www.instagram.com/babakjamcg/)
   cover: /images/web/exordium.jpg
-  link: ""
+  link: https://open.spotify.com/album/6zSI4wsFCIiqqb5Tx7Z8aI?si=iFJa0jqdTfiKwd_mJjuHRg
+  featured: false
