@@ -24,17 +24,17 @@
   <meta property="og:url" content="https://mortzik.com/">
   <meta property="og:image" content="https://mortzik.com/assets/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#07070a">
+  <meta name="theme-color" content="#000000">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/assets/icon-512.png" type="image/png" sizes="512x512">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css?v={{ site.time | date: '%s' }}">
 </head>
 <body>
-  <div class="grain" aria-hidden="true"></div>
+  {%- include brand-icons.html %}
 
   <header class="nav">
     <a href="#top" class="brand" aria-label="Mortzik, back to top">
@@ -58,11 +58,10 @@
   </svg>
 
   <main id="top">
-    <!-- HERO: switchable background (photos, grid, karbandi, ink). Default set in panel. -->
-    <section class="hero" data-motion="{{ s.hero_motion | default: 'random' }}">
+    <!-- HERO: full-screen photos with a glitch transition -->
+    <section class="hero">
       <!-- Full-screen slideshow of installation photos (edit in panel: Bio, links & contact → Hero slides) -->
       <div class="hero-media" aria-hidden="true">
-        <canvas class="hero-canvas"></canvas>
         {%- for sl in s.hero_slides %}
         <figure class="slide{% if forloop.first %} is-active{% endif %}" data-caption="{{ sl.caption | escape }}">
           <img {% if forloop.first %}src{% else %}data-src{% endif %}="{{ sl.image }}" alt="">
@@ -79,7 +78,7 @@
         {%- if latest %}
         {%- assign latest_link = latest.link | default: artist_url %}
         <a class="latest" href="{{ latest_link }}" target="_blank" rel="noopener">
-          {%- if latest.cover != "" and latest.cover %}<img src="{{ latest.cover | replace: '/images/web/', '/images/thumbs/' }}" alt="" width="72" height="72">{% endif %}
+          {%- if latest.cover != "" and latest.cover %}<img src="{{ latest.cover | replace: '/images/web/', '/images/thumbs/' }}" alt="" width="120" height="120">{% endif %}
           <span>
             <span class="mono meta">Latest release · {{ latest.year }}</span>
             <span class="latest-title">{{ latest.title }}</span>
@@ -91,20 +90,11 @@
       {%- if s.hero_slides.size > 0 %}
       <p class="slide-info mono" aria-live="polite"><span class="slide-count">01 / {{ s.hero_slides.size | prepend: "0" | slice: -2, 2 }}</span><span class="slide-cap">{{ s.hero_slides[0].caption }}</span></p>
       {%- endif %}
-      {%- if s.show_motion_switcher != false %}
-      <div class="motion-switch mono" role="group" aria-label="Background style">
-        <button type="button" data-mode="photos">Photos</button>
-        <button type="button" data-mode="grid">Grid</button>
-        <button type="button" data-mode="karbandi">Karbandi</button>
-        <button type="button" data-mode="ink">Ink</button>
-        <button type="button" data-mode="shuffle" aria-label="Random background">↻</button>
-      </div>
-      {%- endif %}
     </section>
 
     <!-- ABOUT -->
     <section id="about" class="section">
-      <h2 class="mono label"><span class="num"></span> About</h2>
+      <h2 class="section-title"><span>About</span></h2>
       <div class="about-grid">
         {%- if s.portrait != "" and s.portrait %}
         <img class="portrait" src="{{ s.portrait }}" alt="Mortzik">
@@ -121,18 +111,21 @@
 
     <!-- MUSIC -->
     <section id="listen" class="section">
-      <h2 class="mono label"><span class="num"></span> Music</h2>
+      <h2 class="section-title"><span>Music</span></h2>
       <div class="players">
         <div class="player">
           <iframe title="Mortzik on Spotify" src="https://open.spotify.com/embed/artist/{{ s.spotify_artist_id }}?utm_source=generator&theme=0" height="452" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
         </div>
         <div class="player">
-          <iframe title="Mortzik on SoundCloud" scrolling="no" height="452" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url={{ s.soundcloud_url | url_encode }}&color=%23e6ff3a&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&visual=false"></iframe>
+          <iframe title="Mortzik on SoundCloud" scrolling="no" height="452" loading="lazy" allow="autoplay" src="https://w.soundcloud.com/player/?url={{ s.soundcloud_url | url_encode }}&color=%23ffffff&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>
         </div>
       </div>
-      <ul class="platforms mono">
+      {%- assign icon_slugs = "spotify,applemusic,soundcloud,youtubemusic,amazonmusic,youtube,bandcamp,tidal,instagram,telegram" | split: "," %}
+      <ul class="platforms">
         {%- for l in s.listen_links %}
-        <li><a href="{{ l.url }}" target="_blank" rel="noopener">{{ l.label }} ↗</a></li>
+        {%- assign slug = l.label | downcase | replace: " ", "" | replace: "-", "" %}
+        <li><a href="{{ l.url }}" target="_blank" rel="noopener" aria-label="{{ l.label }}" title="{{ l.label }}">
+          {%- if icon_slugs contains slug %}<svg class="pl-icon" aria-hidden="true"><use href="#i-{{ slug }}"/></svg>{% endif %}<span class="pl-name mono">{{ l.label }}</span></a></li>
         {%- endfor %}
       </ul>
 
@@ -152,7 +145,7 @@
     <!-- VIDEO: a YouTube playlist link, or a list of single videos (edit in panel: Bio, links & contact) -->
     {%- if has_video %}
     <section id="video" class="section">
-      <h2 class="mono label"><span class="num"></span> Video</h2>
+      <h2 class="section-title"><span>Video</span></h2>
       <div class="video{% if yt_videos.size > 1 and s.youtube_playlist == "" %} with-list{% endif %}"
            data-playlist="{{ s.youtube_playlist | escape }}">
         <div class="video-frame">
@@ -176,12 +169,17 @@
 
     <!-- WORKS -->
     <section id="works" class="section">
-      <h2 class="mono label"><span class="num"></span> Audio-visual &amp; sound design</h2>
+      <h2 class="section-title"><span>Works</span></h2>
       <div class="works">
         {%- for w in site.data.works %}
         <article class="work">
           {%- if w.image != "" and w.image %}
-          <img src="{{ w.image | replace: '/images/web/', '/images/thumbs/' }}" alt="{{ w.title }}" loading="lazy">
+          {%- assign img_link = w.image_link | default: w.link %}
+          {%- if img_link != "" and img_link %}
+          <a class="work-img" href="{{ img_link }}" target="_blank" rel="noopener" aria-label="Open {{ w.title }}"><img src="{{ w.image | replace: '/images/web/', '/images/thumbs/' }}" alt="{{ w.title }}" loading="lazy"><span class="mono open">Open ↗</span></a>
+          {%- else %}
+          <span class="work-img"><img src="{{ w.image | replace: '/images/web/', '/images/thumbs/' }}" alt="{{ w.title }}" loading="lazy"></span>
+          {%- endif %}
           {%- endif %}
           <p class="mono meta">{% if w.year != "" and w.year %}{{ w.year }} · {% endif %}{{ w.category }}</p>
           <h3>{{ w.title }}</h3>
@@ -196,7 +194,7 @@
 
     <!-- GALLERY -->
     <section id="gallery" class="section">
-      <h2 class="mono label"><span class="num"></span> On site</h2>
+      <h2 class="section-title"><span>Gallery</span></h2>
       {%- for g in site.data.gallery %}
       <h3 class="mono sublabel{% if forloop.first %} first{% endif %}">{{ g.title }}</h3>
       <div class="gallery">
@@ -209,7 +207,7 @@
 
     <!-- CONTACT -->
     <section id="contact" class="section contact">
-      <h2 class="mono label"><span class="num"></span> Contact</h2>
+      <h2 class="section-title"><span>Contact</span></h2>
       <a class="email" href="mailto:{{ s.email }}">{{ s.email }}</a>
       <ul class="socials mono">
         {%- for l in s.social_links %}
@@ -226,8 +224,8 @@
   </div>
 
   <footer class="mono">
-    <span class="foot-brand"><span class="badge small"><svg aria-hidden="true"><use href="#mark"/></svg></span>© <span id="year">{{ site.time | date: "%Y" }}</span> Mortzik</span>
-    <span>mortzik.com</span>
+    <span class="foot-brand"><span class="badge small"><svg aria-hidden="true"><use href="#mark"/></svg></span>© Mortzik</span>
+    <a href="#top" class="to-top" aria-label="Back to top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
   </footer>
 
   <script src="/script.js?v={{ site.time | date: '%s' }}"></script>
