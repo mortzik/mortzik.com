@@ -233,7 +233,8 @@
     <!-- CONTACT -->
     <section id="contact" class="section contact">
       <h2 class="section-title"><span>Contact</span></h2>
-      <!-- Email as text, then the social links from the panel as logos -->
+      <!-- One row: email on the left, social logos on the right -->
+      <div class="contact-row">
       {%- if s.email != "" and s.email %}
       <a class="email" href="mailto:{{ s.email }}">{{ s.email }}</a>
       {%- endif %}
@@ -244,6 +245,7 @@
           {%- if icon_slugs contains slug %}<svg class="pl-icon" aria-hidden="true"><use href="#i-{{ slug }}"/></svg>{% endif %}<span class="pl-name mono">{{ l.label }}</span></a></li>
         {%- endfor %}
       </ul>
+      </div>
     </section>
   </main>
 

@@ -440,7 +440,9 @@ a.work-img:hover .open, a.work-img:focus-visible .open { opacity: 1; }
 .socials a:hover { color: var(--accent); border-color: var(--accent); }
 
 /* contact logos: same tiles as the streaming logos, three across */
-.contact-links { display: flex; gap: 40px; margin-top: 28px; }
+.contact-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px 40px; }
+.contact-links { display: flex; gap: 40px; margin-top: 0; }
+@media (max-width: 760px) { .contact-row { gap: 16px; } .contact-links { gap: 20px; } .contact .email { font-size: 14px; } }
 .contact-links a { padding-left: 0; padding-right: 0; }
 
 /* ---------- Footer ---------- */
