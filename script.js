@@ -191,10 +191,12 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
     const split = W * progress;
+    // played part uses the site's accent colour
+    const played = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#ffffff";
     if (!peaks) {
       // no waveform available: a plain progress line
       ctx.fillStyle = "#3a3a3a"; ctx.fillRect(0, H / 2 - 1, W, 2);
-      ctx.fillStyle = "#ffffff"; ctx.fillRect(0, H / 2 - 1, split, 2);
+      ctx.fillStyle = played; ctx.fillRect(0, H / 2 - 1, split, 2);
       return;
     }
     const bar = 2, gap = 1, n = Math.floor(W / (bar + gap));
@@ -202,7 +204,7 @@
       const a = Math.floor(i * peaks.length / n), b = Math.max(a + 1, Math.floor((i + 1) * peaks.length / n));
       let v = 0; for (let j = a; j < b; j++) v = Math.max(v, peaks[j] || 0);
       const h = Math.max(2, v * H), x = i * (bar + gap);
-      ctx.fillStyle = x < split ? "#ffffff" : "#3a3a3a";
+      ctx.fillStyle = x < split ? played : "#3a3a3a";
       ctx.fillRect(x, (H - h) / 2, bar, h);
     }
   }
