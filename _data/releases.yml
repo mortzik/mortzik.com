@@ -47,6 +47,14 @@
   cover: /images/web/enforced.jpg
   link: https://open.spotify.com/track/5JRONnLK8mTwNhx3Cl1lJe?si=69fa51ab14ec4d14
   featured: false
+- title: Luminary
+  year: "2022"
+  type: Single
+  credit: Composed for Brightfestival and Berlin TCS Exhibiton Cover Art by [Amir
+    Mahrav](https://www.instagram.com/amirmahrav/)
+  cover: /images/thumbs/luminary.jpg
+  link: https://open.spotify.com/track/4k1zzEtCGak3uN9UOQsl6m?si=edd10200b3214c67
+  featured: false
 - title: Exordium
   year: "2018"
   type: EP
