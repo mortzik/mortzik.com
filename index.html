@@ -44,7 +44,8 @@
     <button type="button" class="menu-toggle mono" aria-expanded="false" aria-controls="site-menu"><span class="mt-open">Menu</span><span class="mt-close">Close</span></button>
     <nav id="site-menu">
       <a href="#about">About</a>
-      <a href="#listen">Music</a>
+      <a href="#listen">Listen</a>
+      <a href="#releases">Releases</a>
       {%- if has_video %}<a href="#video">Video</a>{% endif %}
       <a href="#works">Works</a>
       <a href="#gallery">Gallery</a>
@@ -109,9 +110,9 @@
       </div>
     </section>
 
-    <!-- MUSIC -->
+    <!-- LISTEN -->
     <section id="listen" class="section">
-      <h2 class="section-title"><span>Music</span></h2>
+      <h2 class="section-title"><span>Listen</span></h2>
       <div class="players">
         <div class="player">
           <iframe title="Mortzik on Spotify" src="https://open.spotify.com/embed/artist/{{ s.spotify_artist_id }}?utm_source=generator&theme=0" height="452" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
@@ -146,7 +147,11 @@
         {%- endfor %}
       </ul>
 
-      <h3 class="mono sublabel">Releases</h3>
+    </section>
+
+    <!-- RELEASES -->
+    <section id="releases" class="section">
+      <h2 class="section-title"><span>Releases</span></h2>
       <ol class="releases">
         {%- for r in releases %}
         <li>

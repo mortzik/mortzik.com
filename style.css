@@ -422,7 +422,9 @@ a.work-img:hover .open, a.work-img:focus-visible .open { opacity: 1; }
 .socials a:hover { color: var(--accent); border-color: var(--accent); }
 
 /* contact logos: same tiles as the streaming logos, three across */
-.contact-links { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 560px; margin-top: 0; }
+.contact-links { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 560px; margin-top: 0; background: none; border: 0; gap: 0; }
+.contact-links a { background: none; }
+.contact-links a:hover { background: none; }
 @media (max-width: 760px) { .contact-links { grid-template-columns: repeat(3, 1fr); } }
 
 /* ---------- Footer ---------- */
