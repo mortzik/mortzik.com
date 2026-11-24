@@ -8,7 +8,7 @@
   --accent: #01D650;   /* emerald green */
   --paper: #F2F0EA;    /* logo background */
   --ink: #0E0E10;      /* logo mark */
-  --sans: "Space Grotesk", system-ui, sans-serif;
+  --sans: "JetBrains Mono", ui-monospace, monospace;   /* one typeface for the whole site */
   --mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
@@ -235,7 +235,8 @@ a { color: inherit; }
 .sc-now { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 16px; align-items: center; padding: 18px 18px 12px; }
 .sc-art { width: 72px; height: 72px; object-fit: cover; display: block; }
 .sc-art[hidden] { display: none; }
-.sc-meta { min-width: 0; }
+.sc-meta { min-width: 0; grid-column: 2; }
+.sc-play { grid-column: 3; }
 .sc-title { font-size: 18px; font-weight: 500; line-height: 1.25; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 .sc-link { display: inline-block; margin-top: 6px; font-size: 11px; letter-spacing: .08em; color: var(--dim); text-decoration: none; }
 .sc-link:hover { color: var(--accent); }
